@@ -5,8 +5,13 @@
   --foreground: #101010;
   --muted: #6f6b63;
   --line: #d9d3c8;
-  --accent: #2f5bff;
-  --accent-foreground: #ffffff;
+
+  /* RMP Works core palette — sampled from the original mark. */
+  --rmp-orange: #f18e30;
+  --rmp-green: #3fa62c;
+  --rmp-purple: #662268;
+  --accent: var(--rmp-orange);
+  --accent-foreground: #101010;
 }
 
 @theme inline {
@@ -37,6 +42,6 @@ a {
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--accent-foreground);
+  background: var(--rmp-orange);
+  color: #101010;
 }
