@@ -8,6 +8,7 @@
 
   /* RMP Works core palette — sampled from the original mark. */
   --rmp-orange: #f18e30;
+  --rmp-orange-panel: #e7832a;
   --rmp-green: #3fa62c;
   --rmp-purple: #662268;
   --accent: var(--rmp-orange);
