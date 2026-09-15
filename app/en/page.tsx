@@ -61,9 +61,9 @@ export default function EnglishHome() {
 
       <section id="work" className="border-y border-[var(--line)] bg-[#101010] text-[#f4f1ea]">
         <div className={`${frame} py-16 sm:py-20 lg:py-24`}>
-          <div className="grid gap-8 border-b border-white/20 pb-10 md:grid-cols-12">
-            <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/55 md:col-span-3">Current work</p>
-            <h2 className="text-4xl font-semibold tracking-[-0.045em] sm:text-5xl md:col-span-9 lg:text-7xl">Real products for real problems.</h2>
+          <div className="border-b border-white/20 pb-10">
+            <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">Current work</p>
+            <h2 className="mt-6 max-w-6xl text-4xl font-semibold tracking-[-0.045em] sm:text-5xl lg:text-7xl">Real products for real problems.</h2>
           </div>
           <div>
             {ventures.map((venture) => (
