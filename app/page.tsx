@@ -1,43 +1,20 @@
 import Link from "next/link";
 
 const ventures = [
-  {
-    index: "01",
-    name: "Regolario",
-    tag: "AI Literacy",
-    description:
-      "Formazione, assessment e documentazione per aziende che devono rendere l'AI literacy concreta, verificabile e utilizzabile.",
-    href: "/projects/regolario",
-    color: "var(--rmp-purple)",
-  },
-  {
-    index: "02",
-    name: "ShopShield",
-    tag: "Compliance e-commerce",
-    description:
-      "Uno strato di compliance essenziale per piccoli business online che vogliono protezione senza complessità enterprise.",
-    href: "/projects/shopshield",
-    color: "var(--rmp-green)",
-  },
-  {
-    index: "03",
-    name: "Tap",
-    tag: "Strumenti per attività locali",
-    description:
-      "NFC e QR che trasformano un'interazione fisica con il cliente in un'azione digitale utile in pochi secondi.",
-    href: "/projects/tap",
-    color: "var(--rmp-orange)",
-  },
+  { index: "01", name: "Regolario", tag: "AI Literacy", description: "Formazione, assessment e documentazione per aziende che devono rendere l'AI literacy concreta, verificabile e utilizzabile.", href: "/projects/regolario", color: "var(--rmp-purple)" },
+  { index: "02", name: "ShopShield", tag: "Compliance e-commerce", description: "Uno strato di compliance essenziale per piccoli business online che vogliono protezione senza complessità enterprise.", href: "/projects/shopshield", color: "var(--rmp-green)" },
+  { index: "03", name: "Tap", tag: "Strumenti per attività locali", description: "NFC e QR che trasformano un'interazione fisica con il cliente in un'azione digitale utile in pochi secondi.", href: "/projects/tap", color: "var(--rmp-orange)" },
 ];
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12 xl:px-16";
+const purpleHover = "transition hover:text-[var(--rmp-purple)]";
 
 function BrandMark() {
   return (
-    <span className="inline-flex h-5 items-end gap-0.5" aria-hidden>
-      <span className="h-2.5 w-2.5 -skew-x-12 bg-[var(--rmp-purple)]" />
-      <span className="h-4 w-2.5 -skew-x-12 bg-[var(--rmp-green)]" />
-      <span className="h-5 w-2.5 -skew-x-12 bg-[var(--rmp-orange)]" />
+    <span className="inline-flex h-7 items-end gap-1" aria-hidden>
+      <span className="h-3 w-3 -skew-x-12 bg-[var(--rmp-purple)]" />
+      <span className="h-5 w-3 -skew-x-12 bg-[var(--rmp-green)]" />
+      <span className="h-7 w-3 -skew-x-12 bg-[var(--rmp-orange)]" />
     </span>
   );
 }
@@ -54,13 +31,13 @@ export default function Home() {
 
           <div className="flex items-center gap-5 sm:gap-8">
             <nav className="hidden items-center gap-5 text-sm text-[var(--muted)] sm:flex sm:gap-8">
-              <Link className="transition hover:text-black" href="/projects">Progetti</Link>
-              <Link className="transition hover:text-black" href="/about">Chi siamo</Link>
-              <Link className="transition hover:text-black" href="/contact">Contatti</Link>
+              <Link className={purpleHover} href="/projects">Progetti</Link>
+              <Link className={purpleHover} href="/about">Chi siamo</Link>
+              <Link className={purpleHover} href="/contact">Contatti</Link>
             </nav>
             <div className="flex items-center gap-1 rounded-full border border-[var(--line)] p-1 text-xs font-semibold">
               <span className="rounded-full bg-[#101010] px-2.5 py-1 text-white">IT</span>
-              <Link href="/en/" className="rounded-full px-2.5 py-1 text-[var(--muted)] transition hover:text-black">EN</Link>
+              <Link href="/en/" className="rounded-full px-2.5 py-1 text-[var(--muted)] transition hover:text-[var(--rmp-purple)]">EN</Link>
             </div>
           </div>
         </div>
@@ -84,9 +61,8 @@ export default function Home() {
           <p className="max-w-2xl text-lg leading-7 text-[var(--muted)] md:col-span-7 md:text-xl md:leading-8">
             RMP Works trasforma idee utili in prodotti, software e piccoli business focalizzati — in fretta, con criterio e senza strati inutili.
           </p>
-
           <div className="flex items-end md:col-span-3 md:col-start-10 md:justify-end">
-            <Link href="#work" className="inline-flex items-center gap-3 text-sm font-medium">
+            <Link href="#work" className="inline-flex items-center gap-3 text-sm font-medium transition hover:text-[var(--rmp-purple)]">
               Guarda cosa stiamo costruendo <span aria-hidden>↓</span>
             </Link>
           </div>
@@ -97,9 +73,7 @@ export default function Home() {
         <div className={`${frame} py-16 sm:py-20 lg:py-24`}>
           <div className="grid gap-8 border-b border-white/20 pb-10 md:grid-cols-12">
             <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/55 md:col-span-3">Progetti attuali</p>
-            <h2 className="text-4xl font-semibold tracking-[-0.045em] sm:text-5xl md:col-span-9 lg:text-7xl">
-              Prodotti veri per problemi veri.
-            </h2>
+            <h2 className="text-4xl font-semibold tracking-[-0.045em] sm:text-5xl md:col-span-9 lg:text-7xl">Prodotti veri per problemi veri.</h2>
           </div>
 
           <div>
@@ -111,53 +85,50 @@ export default function Home() {
                   <p className="mt-2 text-sm text-white/55">{venture.tag}</p>
                 </div>
                 <p className="max-w-3xl text-base leading-7 text-white/70 md:col-span-5">{venture.description}</p>
-                <div className="text-right text-2xl transition-transform group-hover:translate-x-1 md:col-span-2">→</div>
+                <div className="text-right text-2xl transition-all group-hover:translate-x-1 group-hover:text-[var(--rmp-purple)] md:col-span-2">→</div>
               </Link>
             ))}
           </div>
 
           <div className="pt-10">
-            <Link href="/projects" className="inline-flex rounded-full border border-white/35 px-5 py-2.5 text-sm transition hover:border-white hover:bg-white hover:text-black">
-              Tutti i progetti
-            </Link>
+            <Link href="/projects" className="inline-flex rounded-full border border-white/35 px-5 py-2.5 text-sm transition hover:border-[var(--rmp-purple)] hover:bg-[var(--rmp-purple)] hover:text-white">Tutti i progetti</Link>
           </div>
         </div>
       </section>
 
       <section className={`${frame} py-20 sm:py-28 lg:py-32`}>
-        <div className="grid gap-12 md:grid-cols-12">
-          <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)] md:col-span-3">Come lavoriamo</p>
+        <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">Come lavoriamo</p>
 
-          <div className="md:col-span-9">
-            <h2 className="max-w-6xl text-4xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl lg:text-8xl">
-              Team piccoli.
-              <br />
-              Decisioni veloci.
-              <br />
-              <span className="text-[var(--rmp-green)]">Risultati utili.</span>
-            </h2>
+        <h2 className="mt-6 max-w-6xl text-4xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl lg:text-8xl">
+          Team piccoli.
+          <br />
+          Decisioni veloci.
+          <br />
+          <span className="text-[var(--rmp-green)]">Risultati utili.</span>
+        </h2>
 
-            <div className="mt-14 grid gap-8 border-t border-[var(--line)] pt-8 sm:grid-cols-3">
-              <div>
-                <p className="font-mono text-xs text-[var(--rmp-purple)]">01 / FOCUS</p>
-                <p className="mt-4 max-w-sm leading-7">Risolviamo un problema che conta prima di aggiungere dieci funzioni che nessuno ha chiesto.</p>
-              </div>
-              <div>
-                <p className="font-mono text-xs text-[var(--rmp-green)]">02 / SPEDISCI</p>
-                <p className="mt-4 max-w-sm leading-7">Mettiamo presto prodotti funzionanti davanti a persone reali e miglioriamo usando evidenze.</p>
-              </div>
-              <div>
-                <p className="font-mono text-xs text-[var(--rmp-orange)]">03 / SISTEMATIZZA</p>
-                <p className="mt-4 max-w-sm leading-7">Automatizziamo il lavoro ripetibile così il prodotto può crescere senza far crescere la burocrazia.</p>
-              </div>
-            </div>
+        <div className="mt-14 grid gap-0 border-y border-[var(--line)] md:grid-cols-3">
+          <div className="py-8 md:pr-8">
+            <p className="font-mono text-xs text-[var(--rmp-purple)]">01 / FOCUS</p>
+            <p className="mt-4 max-w-md leading-7">Risolviamo un problema che conta prima di aggiungere dieci funzioni che nessuno ha chiesto.</p>
+          </div>
+          <div className="border-t border-[var(--line)] py-8 md:border-l md:border-t-0 md:px-8">
+            <p className="font-mono text-xs text-[var(--rmp-green)]">02 / SPEDISCI</p>
+            <p className="mt-4 max-w-md leading-7">Mettiamo presto prodotti funzionanti davanti a persone reali e miglioriamo usando evidenze.</p>
+          </div>
+          <div className="border-t border-[var(--line)] py-8 md:border-l md:border-t-0 md:pl-8">
+            <p className="font-mono text-xs text-[var(--rmp-orange)]">03 / SISTEMATIZZA</p>
+            <p className="mt-4 max-w-md leading-7">Automatizziamo il lavoro ripetibile così il prodotto può crescere senza far crescere la burocrazia.</p>
           </div>
         </div>
       </section>
 
-      <section className="bg-[var(--rmp-orange)] text-[#101010]">
+      <section className="bg-[var(--rmp-orange-panel)] text-[#101010]">
         <div className={`${frame} grid min-h-[54vh] content-between py-10 sm:py-14`}>
-          <p className="font-mono text-xs uppercase tracking-[0.16em] text-black/55">RMP Works</p>
+          <div className="flex items-center gap-3">
+            <span className="h-px w-10 bg-[var(--rmp-purple)]" />
+            <p className="font-mono text-xs uppercase tracking-[0.16em] text-black/55">RMP Works</p>
+          </div>
 
           <div className="py-16 sm:py-20">
             <h2 className="max-w-7xl text-[clamp(3.5rem,7.5vw,8rem)] font-semibold leading-[0.88] tracking-[-0.07em]">
@@ -169,9 +140,7 @@ export default function Home() {
 
           <div className="flex flex-col gap-5 border-t border-black/25 pt-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-xl text-black/70">Prodotti, esperimenti e business con una ragione per esistere.</p>
-            <Link href="/contact" className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--rmp-purple)]">
-              Parliamone →
-            </Link>
+            <Link href="/contact" className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--rmp-purple)]">Parliamone →</Link>
           </div>
         </div>
       </section>
@@ -179,16 +148,13 @@ export default function Home() {
       <footer className="bg-[#101010] text-white">
         <div className={`${frame} flex flex-col gap-8 py-10 md:flex-row md:items-end md:justify-between`}>
           <div>
-            <div className="flex items-center gap-3">
-              <BrandMark />
-              <p className="text-lg font-semibold tracking-[-0.03em]">RMP WORKS</p>
-            </div>
+            <div className="flex items-center gap-3"><BrandMark /><p className="text-lg font-semibold tracking-[-0.03em]">RMP WORKS</p></div>
             <p className="mt-2 text-sm text-white/45">© 2026 RMP Works</p>
           </div>
           <div className="flex items-center gap-6 text-sm text-white/60">
-            <Link className="hover:text-white" href="/projects">Progetti</Link>
-            <Link className="hover:text-white" href="/about">Chi siamo</Link>
-            <Link className="hover:text-white" href="/contact">Contatti</Link>
+            <Link className="transition hover:text-[var(--rmp-purple)]" href="/projects">Progetti</Link>
+            <Link className="transition hover:text-[var(--rmp-purple)]" href="/about">Chi siamo</Link>
+            <Link className="transition hover:text-[var(--rmp-purple)]" href="/contact">Contatti</Link>
           </div>
         </div>
       </footer>
