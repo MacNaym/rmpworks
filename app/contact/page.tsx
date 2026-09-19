@@ -3,6 +3,9 @@ import Link from "next/link";
 const frame =
   "mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12 xl:px-16";
 
+const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
+const formEndpoint = process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT ?? "";
+
 function BrandMark() {
   return (
     <span className="inline-flex h-7 items-end gap-1" aria-hidden>
@@ -14,6 +17,8 @@ function BrandMark() {
 }
 
 export default function ContactPage() {
+  const formReady = Boolean(formEndpoint);
+
   return (
     <main className="min-h-screen overflow-x-clip bg-[var(--background)] text-[var(--foreground)]">
       <header className="border-b border-[var(--line)]">
@@ -96,10 +101,10 @@ export default function ContactPage() {
       </section>
 
       <section className={`${frame} py-20 sm:py-28`}>
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-7">
+        <div className="grid gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-5">
             <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
-              Contatto diretto
+              Scrivici
             </p>
 
             <h2 className="mt-6 max-w-4xl text-4xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl">
@@ -107,29 +112,114 @@ export default function ContactPage() {
               <br />
               <span className="text-[var(--rmp-purple)]">senza giri inutili.</span>
             </h2>
+
+            <p className="mt-8 max-w-md text-lg leading-8 text-[var(--muted)]">
+              Raccontaci in poche righe cosa stai cercando di fare. Se c’è un punto concreto
+              da affrontare, partiamo da quello.
+            </p>
+
+            {contactEmail ? (
+              <div className="mt-10 border-t border-[var(--line)] pt-6">
+                <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
+                  Preferisci l’email?
+                </p>
+                <a
+                  className="mt-3 inline-flex text-lg font-semibold transition hover:text-[var(--rmp-purple)]"
+                  href={`mailto:${contactEmail}`}
+                >
+                  {contactEmail} ↗
+                </a>
+              </div>
+            ) : null}
           </div>
 
-          <div className="lg:col-span-5">
-            <div className="border-t border-[var(--line)] py-7">
-              <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
-                Canale principale
-              </p>
-              <p className="mt-4 text-lg leading-8 text-[var(--muted)]">
-                Il canale diretto verrà collegato qui prima della pubblicazione definitiva della pagina.
-              </p>
-            </div>
+          <div className="lg:col-span-7">
+            <form
+              action={formReady ? formEndpoint : undefined}
+              method="POST"
+              className="border-t border-[var(--line)]"
+            >
+              <div className="grid gap-6 border-b border-[var(--line)] py-7 sm:grid-cols-2">
+                <label className="grid gap-2">
+                  <span className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+                    Nome
+                  </span>
+                  <input
+                    required
+                    name="name"
+                    autoComplete="name"
+                    className="border-0 border-b border-[var(--line)] bg-transparent px-0 py-3 text-lg outline-none transition focus:border-[var(--rmp-purple)]"
+                    placeholder="Come ti chiami?"
+                  />
+                </label>
 
-            <div className="border-t border-[var(--line)] py-7">
-              <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
-                Nel frattempo
-              </p>
-              <Link
-                href="/projects"
-                className="mt-4 inline-flex items-center gap-2 text-lg font-semibold transition hover:text-[var(--rmp-purple)]"
-              >
-                Esplora i progetti <span aria-hidden>→</span>
-              </Link>
-            </div>
+                <label className="grid gap-2">
+                  <span className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+                    Email
+                  </span>
+                  <input
+                    required
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    className="border-0 border-b border-[var(--line)] bg-transparent px-0 py-3 text-lg outline-none transition focus:border-[var(--rmp-purple)]"
+                    placeholder="nome@azienda.it"
+                  />
+                </label>
+              </div>
+
+              <div className="border-b border-[var(--line)] py-7">
+                <label className="grid gap-2">
+                  <span className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+                    Di cosa vuoi parlare?
+                  </span>
+                  <select
+                    name="topic"
+                    className="border-0 border-b border-[var(--line)] bg-transparent px-0 py-3 text-lg outline-none transition focus:border-[var(--rmp-purple)]"
+                    defaultValue="prodotto"
+                  >
+                    <option value="prodotto">Prodotto o idea</option>
+                    <option value="partnership">Partnership</option>
+                    <option value="regolario">Regolario</option>
+                    <option value="shopshield">ShopShield</option>
+                    <option value="tap">Tap</option>
+                    <option value="altro">Altro</option>
+                  </select>
+                </label>
+              </div>
+
+              <div className="border-b border-[var(--line)] py-7">
+                <label className="grid gap-2">
+                  <span className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+                    Messaggio
+                  </span>
+                  <textarea
+                    required
+                    name="message"
+                    rows={7}
+                    className="resize-y border-0 border-b border-[var(--line)] bg-transparent px-0 py-3 text-lg leading-7 outline-none transition focus:border-[var(--rmp-purple)]"
+                    placeholder="Il problema, il contesto e cosa vorresti ottenere."
+                  />
+                </label>
+              </div>
+
+              <input type="text" name="_gotcha" className="hidden" tabIndex={-1} autoComplete="off" />
+
+              <div className="flex flex-col gap-4 py-7 sm:flex-row sm:items-center sm:justify-between">
+                <p className="max-w-md text-sm leading-6 text-[var(--muted)]">
+                  Inviando il modulo accetti che i dati inseriti vengano usati esclusivamente
+                  per rispondere alla tua richiesta.
+                </p>
+
+                <button
+                  type="submit"
+                  disabled={!formReady}
+                  className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold text-white transition enabled:hover:bg-[var(--rmp-purple)] disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  {formReady ? "Invia messaggio →" : "Configura endpoint form"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </section>
