@@ -1,7 +1,19 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "RMP Works | L'AI in azienda? Alle scartoffie ci pensa Regolario.",
+  description:
+    "RMP Works presenta Regolario: una soluzione per semplificare formazione, organizzazione e documentazione legate all'uso dell'AI in azienda.",
+  openGraph: {
+    title: "L'AI in azienda? Alle scartoffie ci pensa Regolario.",
+    description:
+      "Meno lavoro da ricostruire, più tempo per il lavoro vero: scopri Regolario di RMP Works.",
+  },
+};
 
 const ventures = [
-  { index: "01", name: "Regolario", tag: "AI Literacy", description: "Formazione, assessment e documentazione per aziende che devono rendere l'AI literacy concreta, verificabile e utilizzabile.", href: "/projects/regolario", color: "var(--rmp-purple)" },
+  { index: "01", name: "Regolario", tag: "AI in azienda, senza scartoffie", description: "Aiuta a rendere più semplice il lavoro di formazione, organizzazione e documentazione che accompagna l'uso dell'AI.", href: "/projects/regolario", color: "var(--rmp-purple)" },
   { index: "02", name: "ShopShield", tag: "Compliance e-commerce", description: "Uno strato di compliance essenziale per piccoli business online che vogliono protezione senza complessità enterprise.", href: "/projects/shopshield", color: "var(--rmp-green)" },
   { index: "03", name: "Tap", tag: "Strumenti per attività locali", description: "NFC e QR che trasformano un'interazione fisica con il cliente in un'azione digitale utile in pochi secondi.", href: "/projects/tap", color: "var(--rmp-orange)" },
 ];
@@ -46,25 +58,29 @@ export default function Home() {
       <section className={`${frame} grid min-h-[76vh] content-between py-8 sm:py-12 lg:py-14`}>
         <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
           <span className="h-2 w-2 rounded-full bg-[var(--rmp-purple)]" />
-          Studio indipendente di prodotti
+          RMP Works presenta Regolario
         </div>
 
         <div className="py-16 sm:py-24 lg:py-28">
           <h1 className="max-w-[1420px] text-[clamp(4rem,9vw,10rem)] font-semibold leading-[0.84] tracking-[-0.075em]">
-            Costruiamo cose
+            Usi l&apos;AI in azienda?
             <br />
-            che <span className="text-[var(--rmp-orange)]">funzionano.</span>
+            Alle <span className="text-[var(--rmp-orange)]">scartoffie</span>
+            <br />ci pensa Regolario.
           </h1>
         </div>
 
         <div className="grid gap-8 border-t border-[var(--line)] pt-6 md:grid-cols-12">
           <p className="max-w-2xl text-lg leading-7 text-[var(--muted)] md:col-span-7 md:text-xl md:leading-8">
-            RMP Works trasforma idee utili in prodotti, software e piccoli business focalizzati — in fretta, con criterio e senza strati inutili.
+            Regolario aiuta a togliere dalle spalle di imprenditori e aziende una parte del lavoro organizzativo e documentale che l&apos;AI si porta dietro.
           </p>
-          <div className="flex items-end md:col-span-3 md:col-start-10 md:justify-end">
-            <Link href="#work" className="inline-flex items-center gap-3 text-sm font-medium transition hover:text-[var(--rmp-purple)]">
-              Guarda cosa stiamo costruendo <span aria-hidden>↓</span>
+          <div className="flex flex-wrap items-end gap-3 md:col-span-4 md:col-start-9 md:justify-end">
+            <Link href="/projects/regolario" className="inline-flex items-center gap-3 rounded-full bg-[#101010] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--rmp-purple)]">
+              Scopri Regolario <span aria-hidden>→</span>
             </Link>
+            <a href="https://regolario.com/assessment-gratuito" className="inline-flex items-center gap-3 rounded-full border border-[var(--line)] px-5 py-2.5 text-sm font-medium transition hover:border-[var(--rmp-purple)] hover:text-[var(--rmp-purple)]">
+              Fai l&apos;assessment <span aria-hidden>↗</span>
+            </a>
           </div>
         </div>
       </section>

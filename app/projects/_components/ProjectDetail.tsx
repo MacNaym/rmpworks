@@ -14,6 +14,9 @@ type ProjectDetailProps = {
   principles: string[];
   externalHref?: string;
   externalLabel?: string;
+  benefits?: Array<{ title: string; copy: string }>;
+  steps?: Array<{ title: string; copy: string }>;
+  actions?: Array<{ href: string; label: string }>;
 };
 
 const frame =
@@ -43,6 +46,9 @@ export default function ProjectDetail({
   principles,
   externalHref,
   externalLabel,
+  benefits,
+  steps,
+  actions,
 }: ProjectDetailProps) {
   return (
     <main className="min-h-screen overflow-x-clip bg-[var(--background)] text-[var(--foreground)]">
@@ -136,6 +142,42 @@ export default function ProjectDetail({
         </div>
       </section>
 
+      {benefits?.length ? (
+        <section className={`${frame} py-20 sm:py-28`} aria-labelledby="benefits-title">
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">In pratica</p>
+          <h2 id="benefits-title" className="mt-6 max-w-5xl text-4xl font-semibold leading-[0.98] tracking-[-0.05em] sm:text-6xl">
+            Meno lavoro da ricostruire. Più tempo per il lavoro vero.
+          </h2>
+          <div className="mt-12 grid border-y border-[var(--line)] md:grid-cols-3">
+            {benefits.map((benefit, index) => (
+              <article key={benefit.title} className="border-b border-[var(--line)] py-8 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0 md:last:pr-0">
+                <p className="font-mono text-xs" style={{ color: accent }}>0{index + 1}</p>
+                <h3 className="mt-5 text-2xl font-semibold tracking-[-0.035em]">{benefit.title}</h3>
+                <p className="mt-3 max-w-sm leading-7 text-[var(--muted)]">{benefit.copy}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {steps?.length ? (
+        <section className="border-y border-[var(--line)] bg-[#f0ede5]" aria-labelledby="steps-title">
+          <div className={`${frame} py-20 sm:py-24`}>
+            <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">Come funziona</p>
+            <h2 id="steps-title" className="mt-6 max-w-5xl text-4xl font-semibold leading-[0.98] tracking-[-0.05em] sm:text-6xl">Tre passaggi chiari. Niente percorso da indovinare.</h2>
+            <ol className="mt-12 grid gap-0 border-y border-[var(--line)] md:grid-cols-3">
+              {steps.map((step, index) => (
+                <li key={step.title} className="list-none border-b border-[var(--line)] py-8 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0 md:last:pr-0">
+                  <p className="font-mono text-xs" style={{ color: accent }}>0{index + 1}</p>
+                  <h3 className="mt-5 text-2xl font-semibold tracking-[-0.035em]">{step.title}</h3>
+                  <p className="mt-3 max-w-sm leading-7 text-[var(--muted)]">{step.copy}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      ) : null}
+
       <section className={`${frame} py-20 sm:py-28`}>
         <div className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
@@ -210,12 +252,17 @@ export default function ProjectDetail({
             </h2>
 
             <div className="flex flex-wrap gap-3">
+              {actions?.map((action) => (
+                <a key={action.href} href={action.href} target="_blank" rel="noreferrer" className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]">
+                  {action.label} ↗
+                </a>
+              ))}
               {externalHref && externalLabel ? (
                 <a
                   href={externalHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--rmp-purple)]"
+                  className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]"
                 >
                   {externalLabel} ↗
                 </a>
