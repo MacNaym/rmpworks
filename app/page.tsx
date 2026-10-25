@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 };
 
 const ventures = [
-  { index: "01", name: "Regolario", tag: "AI in azienda, senza scartoffie", description: "Aiuta a rendere più semplice il lavoro di formazione, organizzazione e documentazione che accompagna l'uso dell'AI.", href: "/projects/regolario", color: "var(--rmp-purple)" },
-  { index: "02", name: "ShopShield", tag: "Compliance e-commerce", description: "Uno strato di compliance essenziale per piccoli business online che vogliono protezione senza complessità enterprise.", href: "/projects/shopshield", color: "var(--rmp-green)" },
-  { index: "03", name: "Tap", tag: "Strumenti per attività locali", description: "NFC e QR che trasformano un'interazione fisica con il cliente in un'azione digitale utile in pochi secondi.", href: "/projects/tap", color: "var(--rmp-orange)" },
+  { index: "01", name: "Regolario", tag: "AI in azienda, senza scartoffie", description: "Aiuta a rendere più semplice il lavoro di formazione, organizzazione e documentazione che accompagna l'uso dell'AI.", href: "/projects/regolario", color: "var(--rmp-purple)", commercialVisible: true },
+  { index: "02", name: "ShopShield", tag: "Compliance e-commerce", description: "Uno strato di compliance essenziale per piccoli business online che vogliono protezione senza complessità enterprise.", href: "/projects/shopshield", color: "var(--rmp-green)", commercialVisible: false },
+  { index: "03", name: "Tap", tag: "Strumenti per attività locali", description: "NFC e QR che trasformano un'interazione fisica con il cliente in un'azione digitale utile in pochi secondi.", href: "/projects/tap", color: "var(--rmp-orange)", commercialVisible: false },
 ];
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12 xl:px-16";
@@ -75,7 +75,7 @@ export default function Home() {
             Regolario aiuta a togliere dalle spalle di imprenditori e aziende una parte del lavoro organizzativo e documentale che l&apos;AI si porta dietro.
           </p>
           <div className="flex flex-wrap items-end gap-3 md:col-span-4 md:col-start-9 md:justify-end">
-            <Link href="/projects/regolario" className="inline-flex items-center gap-3 rounded-full bg-[#101010] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--rmp-purple)]">
+            <Link href="/projects/regolario" className="inline-flex items-center gap-3 rounded-full bg-[#101010] px-5 py-2.5 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]">
               Scopri Regolario <span aria-hidden>→</span>
             </Link>
             <a href="https://regolario.com/assessment-gratuito" className="inline-flex items-center gap-3 rounded-full border border-[var(--line)] px-5 py-2.5 text-sm font-medium transition hover:border-[var(--rmp-purple)] hover:text-[var(--rmp-purple)]">
@@ -93,7 +93,7 @@ export default function Home() {
           </div>
 
           <div>
-            {ventures.map((venture) => (
+            {ventures.filter((venture) => venture.commercialVisible).map((venture) => (
               <Link href={venture.href} key={venture.name} className="group grid gap-6 border-b border-white/20 py-9 transition hover:border-white/60 md:grid-cols-12 md:items-start">
                 <span className="font-mono text-xs md:col-span-1" style={{ color: venture.color }}>{venture.index}</span>
                 <div className="md:col-span-4">
@@ -156,7 +156,7 @@ export default function Home() {
 
           <div className="flex flex-col gap-5 border-t border-black/25 pt-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-xl text-black/70">Prodotti, esperimenti e business con una ragione per esistere.</p>
-            <Link href="/contact" className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--rmp-purple)]">Parliamone →</Link>
+            <Link href="/contact" className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]">Parliamone →</Link>
           </div>
         </div>
       </section>

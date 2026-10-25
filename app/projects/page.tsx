@@ -10,6 +10,7 @@ const projects = [
     description:
       "Formazione, assessment e documentazione per rendere l’AI literacy concreta, verificabile e utilizzabile nelle PMI.",
     href: "/projects/regolario",
+    commercialVisible: true,
   },
   {
     index: "02",
@@ -20,6 +21,7 @@ const projects = [
     description:
       "Uno strato di compliance essenziale per piccoli business online: semplice da installare, leggero da gestire.",
     href: "/projects/shopshield",
+    commercialVisible: false,
   },
   {
     index: "03",
@@ -30,6 +32,7 @@ const projects = [
     description:
       "NFC e QR per trasformare un’interazione fisica con il cliente in recensioni e azioni digitali utili in pochi secondi.",
     href: "/projects/tap",
+    commercialVisible: false,
   },
 ];
 
@@ -101,7 +104,7 @@ export default function ProjectsPage() {
       <section className="border-y border-[var(--line)] bg-[#101010] text-[#f4f1ea]">
         <div className={`${frame} py-14 sm:py-20`}>
           <div className="border-t border-white/20">
-            {projects.map((project) => (
+            {projects.filter((project) => project.commercialVisible).map((project) => (
               <Link
                 key={project.name}
                 href={project.href}
@@ -184,7 +187,7 @@ export default function ProjectsPage() {
 
             <Link
               href="/contact"
-              className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--rmp-purple)]"
+              className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]"
             >
               Parliamone →
             </Link>
