@@ -20,6 +20,7 @@ const ventures = [
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12 xl:px-16";
 const purpleHover = "transition hover:text-[var(--rmp-purple)]";
+const assessmentHref = "https://regolario.com/assessment-gratuito?source=rmpworks&utm_source=rmpworks&utm_medium=website&utm_campaign=assessment_2026&utm_content=rmp_home_hero";
 
 function BrandMark() {
   return (
@@ -78,7 +79,7 @@ export default function Home() {
             <Link href="/projects/regolario" className="inline-flex items-center gap-3 rounded-full bg-[#101010] px-5 py-2.5 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]">
               Scopri Regolario <span aria-hidden>→</span>
             </Link>
-            <a href="https://regolario.com/assessment-gratuito" className="inline-flex items-center gap-3 rounded-full border border-[var(--line)] px-5 py-2.5 text-sm font-medium transition hover:border-[var(--rmp-purple)] hover:text-[var(--rmp-purple)]">
+            <a href={assessmentHref} className="inline-flex items-center gap-3 rounded-full border border-[var(--line)] px-5 py-2.5 text-sm font-medium transition hover:border-[var(--rmp-purple)] hover:text-[var(--rmp-purple)]">
               Fai l&apos;assessment <span aria-hidden>↗</span>
             </a>
           </div>

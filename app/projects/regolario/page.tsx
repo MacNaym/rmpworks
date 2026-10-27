@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default function RegolarioPage() {
+  const assessmentHref = "https://regolario.com/assessment-gratuito?source=rmpworks&utm_source=rmpworks&utm_medium=website&utm_campaign=assessment_2026&utm_content=rmp_regolario_project";
   return (
     <ProjectDetail
       eyebrow="Progetto 01"
@@ -45,7 +46,7 @@ export default function RegolarioPage() {
         { title: "Rivediamo quando serve", copy: "Il percorso resta comprensibile mentre cambiano persone, strumenti e utilizzi." },
       ]}
       actions={[
-        { href: "https://regolario.com/assessment-gratuito", label: "Fai l'assessment gratuito" },
+        { href: assessmentHref, label: "Fai l'assessment gratuito" },
         { href: "https://regolario.com/partners", label: "Proponi una partnership" },
       ]}
     />
