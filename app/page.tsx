@@ -65,10 +65,10 @@ export default function Home() {
 
         <div className="py-16 sm:py-24 lg:py-28">
           <h1 className="max-w-[1420px] text-[clamp(4rem,9vw,10rem)] font-semibold leading-[0.84] tracking-[-0.075em]">
-            Usi l&apos;AI in azienda?
+            Tu usa l&apos;AI.
             <br />
-            Alle <span className="text-[var(--rmp-orange)]">scartoffie</span>
-            <br />ci pensa Regolario.
+            Noi mettiamo in ordine
+            <br /><span className="text-[var(--rmp-orange)]">la burocrazia.</span>
           </h1>
         </div>
 
