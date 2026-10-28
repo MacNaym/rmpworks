@@ -3,11 +3,11 @@ import { rmpPhone } from "./contact-details";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "RMP Works | L'AI in azienda? Alle scartoffie ci pensa Regolario.",
+  title: "RMP Works | Tu usa l'AI. Noi mettiamo in ordine la burocrazia.",
   description:
     "RMP Works presenta Regolario: una soluzione per semplificare formazione, organizzazione e documentazione legate all'uso dell'AI in azienda.",
   openGraph: {
-    title: "L'AI in azienda? Alle scartoffie ci pensa Regolario.",
+    title: "Tu usa l'AI. Noi mettiamo in ordine la burocrazia.",
     description:
       "Meno lavoro da ricostruire, più tempo per il lavoro vero: scopri Regolario di RMP Works.",
   },
@@ -74,7 +74,7 @@ export default function Home() {
 
         <div className="grid gap-8 border-t border-[var(--line)] pt-6 md:grid-cols-12">
           <p className="max-w-2xl text-lg leading-7 text-[var(--muted)] md:col-span-7 md:text-xl md:leading-8">
-            Regolario aiuta a togliere dalle spalle di imprenditori e aziende una parte del lavoro organizzativo e documentale che l&apos;AI si porta dietro.
+            Formazione, attestati, registri e documentazione: Regolario aiuta la tua azienda a gestirli in un unico posto, senza scartoffie sparse.
           </p>
           <div className="flex flex-wrap items-end gap-3 md:col-span-4 md:col-start-9 md:justify-end">
             <Link href="/projects/regolario" className="inline-flex items-center gap-3 rounded-full bg-[#101010] px-5 py-2.5 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]">
