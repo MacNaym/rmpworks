@@ -5,16 +5,16 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "RMP Works | Tu usa l'AI. Noi mettiamo in ordine la burocrazia.",
   description:
-    "RMP Works presenta Regolario: una soluzione per semplificare formazione, organizzazione e documentazione legate all'uso dell'AI in azienda.",
+    "Tutta la formazione e la documentazione AI della tua azienda, finalmente organizzate. Con Regolario.",
   openGraph: {
     title: "Tu usa l'AI. Noi mettiamo in ordine la burocrazia.",
     description:
-      "Meno lavoro da ricostruire, più tempo per il lavoro vero: scopri Regolario di RMP Works.",
+      "Formazione, attestati, registri e documentazione AI della tua azienda, finalmente organizzate.",
   },
 };
 
 const ventures = [
-  { index: "01", name: "Regolario", tag: "AI in azienda, senza scartoffie", description: "Aiuta a rendere più semplice il lavoro di formazione, organizzazione e documentazione che accompagna l'uso dell'AI.", href: "/projects/regolario", color: "var(--rmp-purple)", commercialVisible: true },
+  { index: "01", name: "Regolario", tag: "AI in azienda, senza scartoffie", description: "Formazione e documentazione AI finalmente organizzate in un unico posto.", href: "/projects/regolario", color: "var(--rmp-purple)", commercialVisible: true },
   { index: "02", name: "ShopShield", tag: "Compliance e-commerce", description: "Uno strato di compliance essenziale per piccoli business online che vogliono protezione senza complessità enterprise.", href: "/projects/shopshield", color: "var(--rmp-green)", commercialVisible: false },
   { index: "03", name: "Tap", tag: "Strumenti per attività locali", description: "NFC e QR che trasformano un'interazione fisica con il cliente in un'azione digitale utile in pochi secondi.", href: "/projects/tap", color: "var(--rmp-orange)", commercialVisible: false },
 ];
@@ -74,7 +74,7 @@ export default function Home() {
 
         <div className="grid gap-8 border-t border-[var(--line)] pt-6 md:grid-cols-12">
           <p className="max-w-2xl text-lg leading-7 text-[var(--muted)] md:col-span-7 md:text-xl md:leading-8">
-            Formazione, attestati, registri e documentazione: Regolario aiuta la tua azienda a gestirli in un unico posto, senza scartoffie sparse.
+            Formazione, attestati, registri e documentazione: Regolario ti aiuta a gestire tutto in un unico posto, senza rincorrere fogli Excel, scadenze e documenti sparsi.
           </p>
           <div className="flex flex-wrap items-end gap-3 md:col-span-4 md:col-start-9 md:justify-end">
             <Link href="/projects/regolario" className="inline-flex items-center gap-3 rounded-full bg-[#101010] px-5 py-2.5 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]">

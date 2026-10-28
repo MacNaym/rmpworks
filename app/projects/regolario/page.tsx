@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import ProjectDetail from "../_components/ProjectDetail";
 
 export const metadata: Metadata = {
-  title: "Regolario | L'AI in azienda? Alle scartoffie ci pensa Regolario.",
+  title: "Regolario | Tu usa l'AI. Noi mettiamo in ordine la burocrazia.",
   description:
-    "Regolario semplifica formazione, organizzazione e documentazione legate all'uso dell'AI in azienda. Scopri l'assessment gratuito o la proposta partnership.",
+    "Tutta la formazione e la documentazione AI della tua azienda, finalmente organizzate. Con Regolario.",
   openGraph: {
-    title: "L'AI in azienda? Alle scartoffie ci pensa Regolario.",
+    title: "Tu usa l'AI. Noi mettiamo in ordine la burocrazia.",
     description:
-      "Un percorso semplice per organizzare il lavoro che accompagna l'uso dell'AI in azienda.",
+      "Formazione, attestati, registri e documentazione AI in un unico posto.",
   },
 };
 
@@ -19,8 +19,8 @@ export default function RegolarioPage() {
       eyebrow="Progetto 01"
       name="Regolario"
       category="AI in azienda, senza scartoffie"
-      headline="Usi l'AI in azienda? Alle scartoffie ci pensa Regolario."
-      description="Regolario è pensato per semplificare formazione, organizzazione e documentazione legate all'uso dell'AI, senza aggiungere un altro progetto da gestire."
+      headline="Tu usa l'AI. Noi mettiamo in ordine la burocrazia."
+      description="Formazione, attestati, registri e documentazione: Regolario ti aiuta a gestire tutto in un unico posto, senza rincorrere fogli Excel, scadenze e documenti sparsi."
       accent="var(--rmp-purple)"
       status="Attivo"
       problem="Molte aziende usano già strumenti AI, ma senza una fotografia chiara degli usi reali, senza formazione per ruolo e senza documentazione ordinata."
