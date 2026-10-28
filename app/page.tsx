@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { rmpPhone } from "./contact-details";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -167,6 +168,7 @@ export default function Home() {
           <div>
             <div className="flex items-center gap-3"><BrandMark /><p className="text-lg font-semibold tracking-[-0.03em]">RMP WORKS</p></div>
             <p className="mt-2 text-sm text-white/45">© 2026 RMP Works</p>
+            <a className="mt-2 inline-flex text-sm text-white/60 transition hover:text-[var(--rmp-purple)]" href={rmpPhone.href}>{rmpPhone.display}</a>
           </div>
           <div className="flex items-center gap-6 text-sm text-white/60">
             <Link className="transition hover:text-[var(--rmp-purple)]" href="/projects">Progetti</Link>

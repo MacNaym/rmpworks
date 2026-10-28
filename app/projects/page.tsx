@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { rmpPhone } from "../contact-details";
 
 const projects = [
   {
@@ -207,6 +208,7 @@ export default function ProjectsPage() {
               </p>
             </div>
             <p className="mt-2 text-sm text-white/45">© 2026 RMP Works</p>
+            <a className="mt-2 inline-flex text-sm text-white/60 transition hover:text-[var(--rmp-purple)]" href={rmpPhone.href}>{rmpPhone.display}</a>
           </div>
 
           <div className="flex items-center gap-6 text-sm text-white/60">

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { rmpPhone } from "../contact-details";
 
 export const metadata: Metadata = {
   title: "Contatti | RMP Works",
@@ -53,15 +54,24 @@ export default function ContactPage() {
           >
             Scrivi a supporto@regolario.com <span aria-hidden>↗</span>
           </a>
+          <a
+            href={rmpPhone.href}
+            className="mt-3 inline-flex w-fit items-center gap-3 rounded-full border border-[var(--line)] px-6 py-3 text-sm font-semibold transition hover:border-[var(--rmp-purple)] hover:text-[var(--rmp-purple)]"
+          >
+            Chiama RMP Works: {rmpPhone.display}
+          </a>
           <p className="mt-6 text-sm leading-6 text-[var(--muted)]">
-            Questo recapito riguarda Regolario. Gli altri canali RMP Works saranno pubblicati solo quando verificati.
+            Il supporto email riguarda Regolario. Per RMP Works puoi chiamare il numero aziendale qui sopra.
           </p>
         </div>
       </section>
       <footer className="bg-[#101010] text-white">
         <div className={`${frame} flex flex-col gap-5 py-9 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between`}>
           <div className="flex items-center gap-3"><BrandMark /><span className="font-semibold text-white">RMP WORKS</span></div>
-          <Link className="transition hover:text-[var(--rmp-purple)]" href="/projects/regolario">Scopri Regolario</Link>
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
+            <a className="transition hover:text-[var(--rmp-purple)]" href={rmpPhone.href}>{rmpPhone.display}</a>
+            <Link className="transition hover:text-[var(--rmp-purple)]" href="/projects/regolario">Scopri Regolario</Link>
+          </div>
         </div>
       </footer>
     </main>

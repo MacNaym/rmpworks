@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { rmpPhone } from "../contact-details";
 
 const ventures = [
   { index: "01", name: "Regolario", tag: "AI Literacy", description: "Training, assessment and documentation for companies that need AI literacy to be practical, verifiable and usable.", href: "/projects/regolario", color: "var(--rmp-purple)", commercialVisible: true },
@@ -104,7 +105,7 @@ export default function EnglishHome() {
 
       <footer className="bg-[#101010] text-white">
         <div className={`${frame} flex flex-col gap-8 py-10 md:flex-row md:items-end md:justify-between`}>
-          <div><div className="flex items-center gap-3"><BrandMark /><p className="text-lg font-semibold tracking-[-0.03em]">RMP WORKS</p></div><p className="mt-2 text-sm text-white/45">© 2026 RMP Works</p></div>
+          <div><div className="flex items-center gap-3"><BrandMark /><p className="text-lg font-semibold tracking-[-0.03em]">RMP WORKS</p></div><p className="mt-2 text-sm text-white/45">© 2026 RMP Works</p><a className="mt-2 inline-flex text-sm text-white/60 transition hover:text-[var(--rmp-purple)]" href={rmpPhone.href}>{rmpPhone.display}</a></div>
           <div className="flex items-center gap-6 text-sm text-white/60"><Link className="transition hover:text-[var(--rmp-purple)]" href="/projects">Work</Link><Link className="transition hover:text-[var(--rmp-purple)]" href="/about">About</Link><Link className="transition hover:text-[var(--rmp-purple)]" href="/contact">Contact</Link></div>
         </div>
       </footer>
