@@ -1,5 +1,6 @@
 "use client";
 import {useEffect,useState} from "react";
+import FounderOnboarding from "./FounderOnboarding";
 type State="initial"|"processing"|"paid"|"pending"|"failed"|"expired"|"invalid"|"unavailable";
 type Result={status:State;currency?:string;amount_total?:number;amount_tax?:number};
 export default function FounderOrderStatus(){
@@ -45,6 +46,7 @@ export default function FounderOrderStatus(){
     <p>Totale di prova: {fmt(details.amount_total)}</p>
     {details.amount_tax!==undefined&&<p>Di cui IVA: {fmt(details.amount_tax)}</p>}
   </div>}
+  {status==="paid"&&<FounderOnboarding/>}
   {(status==="processing"||status==="pending")&&attempts>=8&&<p className="mt-5 text-xs">La verifica automatica è terminata; aggiorna la pagina per controllare ancora.</p>}
   <p className="mt-7 border-t border-black/20 pt-4 font-mono text-[10px] font-semibold uppercase">Nessun documento fiscale o contratto è generato da questa pagina.</p>
  </section>;
