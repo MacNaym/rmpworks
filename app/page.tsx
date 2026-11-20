@@ -58,7 +58,7 @@ export default function Home() {
           <span className="hidden text-center md:block">EST. 2026 / ITALIA / ONLINE</span>
           <span className="text-right"><span className="text-[#e93625]">●</span> IL TUO PUBBLICO / IL TUO BUSINESS</span>
         </div>
-        <h1 id="hero-title" className="font-sans text-[clamp(3.5rem,10.7vw,11.6rem)] font-black uppercase leading-[.79] tracking-[-.095em]">
+        <h1 id="hero-title" className="font-sans text-[clamp(2.25rem,10.7vw,11.6rem)] font-black uppercase leading-[.79] tracking-[-.095em]">
           <span className="block whitespace-nowrap">IL TUO CANALE</span>
           <span className="block whitespace-nowrap">VALE <span className="text-[#e93625]">PIÙ</span></span>
           <span className="block whitespace-nowrap">DELLE VIEWS.</span>
