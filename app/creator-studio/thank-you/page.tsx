@@ -1,4 +1,5 @@
 import Link from "next/link";
+import FounderOrderStatus from "./FounderOrderStatus";
 import type { Metadata } from "next";
 import { PageShell, HeroMeta, frame, eyebrow } from "../../_components/EditorialShell";
 
@@ -22,6 +23,7 @@ export default function FounderThanks() {
         <p className={eyebrow + " text-[#e93625]"}>[ COSA SUCCEDE ORA ]</p>
         <h2 className="mt-6 text-[clamp(2rem,4vw,4rem)] font-black leading-[.96] tracking-[-.065em]">Il checkout è finito. Ora verifichiamo il pagamento.</h2>
         <p className="mt-7 max-w-xl text-base leading-8 text-[#353331]">Se hai completato il pagamento di prova su Stripe, riceveremo un evento di conferma nel nostro sistema. Arrivare su questa pagina, da solo, non dimostra che il pagamento sia riuscito.</p>
+        <FounderOrderStatus/>
         <div className="mt-9 border-l-2 border-[#e93625] pl-5 text-sm font-semibold leading-7">
           Questa è una simulazione sandbox. Non è stato addebitato denaro reale e non viene attivato alcun servizio.
         </div>
