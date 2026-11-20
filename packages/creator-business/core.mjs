@@ -52,7 +52,7 @@ export function splitCreatorRevenue(netCents, creatorShareBps=8000) {
 export function validateLeadInput(input) {
   if (!input || typeof input !== 'object') throw new Error('Invalid lead');
   const email = typeof input.email === 'string' ? input.email.trim().toLowerCase() : '';
-  if (email.length > 254 || !/^[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(email)) throw new Error('Invalid email');
+  if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('Invalid email');
   if (typeof input.source !== 'string' || !['quiz','gift','manual','landing'].includes(input.source)) throw new Error('Invalid source');
   if (typeof input.marketingConsent !== 'boolean') throw new Error('Explicit consent flag required');
   return {email,source:input.source,marketingConsent:input.marketingConsent};
