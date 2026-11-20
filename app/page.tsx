@@ -50,7 +50,7 @@ export default function Home() {
         <p className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#dbe5f9] bg-[#edf4ff] px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#2458b5]">RMP Creator Studio · Per piccoli creator</p>
         <h1 className="max-w-5xl text-[clamp(3.3rem,7.4vw,7.8rem)] font-semibold leading-[.96] tracking-[-.07em]">Hai un pubblico.<br/><span className="text-[#2563eb]">Costruiamoci qualcosa.</span></h1>
         <p className="mt-9 max-w-3xl text-lg leading-8 text-[#556174] sm:text-xl">Ti aiutiamo a creare i primi prodotti digitali per la tua community: dallo strumento gratuito alla pagina di vendita. Senza dover sviluppare un e-commerce da zero.</p>
-        <div className="mt-9 flex flex-wrap gap-3"><Link href="/creator-studio" className={button}>Scopri l'attivazione Founder →</Link><Link href="#come-funziona" className={outline}>Come funziona ↓</Link></div>
+        <div className="mt-9 flex flex-wrap gap-3"><Link href="/creator-studio" className={button}>Scopri l&apos;attivazione Founder →</Link><Link href="#come-funziona" className={outline}>Come funziona ↓</Link></div>
       </div>
       <aside className="rounded-3xl border border-[#dce5f3] bg-white p-6 shadow-sm lg:col-span-3">
         <p className="text-xs font-bold uppercase tracking-widest text-[#2563eb]">Per chi è</p>
@@ -68,12 +68,12 @@ export default function Home() {
     <section id="prodotti" className={`${frame} py-20 sm:py-28`}>
       <p className="text-xs font-semibold uppercase tracking-widest text-[#2563eb]">Un prodotto alla volta</p>
       <h2 className="mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:text-6xl">Dal contenuto gratuito al prodotto completo.</h2>
-      <p className="mt-5 max-w-3xl text-lg leading-8 text-[#556174]">Progettiamo una scala di prodotti, ma cominciamo dal primo passo vendibile. Gli importi qui sotto sono esempi: il prezzo finale dipende dal tuo pubblico e dall'offerta.</p>
+      <p className="mt-5 max-w-3xl text-lg leading-8 text-[#556174]">Progettiamo una scala di prodotti, ma cominciamo dal primo passo vendibile. Gli importi qui sotto sono esempi: il prezzo finale dipende dal tuo pubblico e dall&apos;offerta.</p>
       <div className="mt-11 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{tiers.map(t=><div key={t.label} className="rounded-2xl border border-[#dce5f3] bg-white p-6"><p className="text-xs font-bold uppercase tracking-widest text-[#2563eb]">{t.label}</p><p className="mt-4 text-3xl font-semibold">{t.price}</p><p className="mt-4 text-sm leading-7 text-[#56657a]">{t.text}</p></div>)}</div>
     </section>
     <section className="border-y border-[#dce5f3] bg-[#eaf1ff] py-16">
       <div className={`${frame} flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between`}>
-        <div><p className="text-xs font-semibold uppercase tracking-widest text-[#2563eb]">Programma di lancio</p><h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">Il tuo primo spazio digitale, con noi.</h2><p className="mt-4 max-w-2xl text-[#475569]">Scopri l'attivazione assistita Founder e cosa include la prevendita. Nessun risultato economico promesso.</p></div>
+        <div><p className="text-xs font-semibold uppercase tracking-widest text-[#2563eb]">Programma di lancio</p><h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">Il tuo primo spazio digitale, con noi.</h2><p className="mt-4 max-w-2xl text-[#475569]">Scopri l&apos;attivazione assistita Founder e cosa include la prevendita. Nessun risultato economico promesso.</p></div>
         <Link href="/creator-studio" className={button}>Dettagli del programma →</Link>
       </div>
     </section>
