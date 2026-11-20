@@ -20,7 +20,7 @@ export function normalizeCreatorSlug(value) {
 // Host is for tenant LOOKUP only. Never use it as proof of authorization.
 export function resolveCreatorHost(hostHeader, rootDomain='rmpworks.com') {
   if (typeof hostHeader !== 'string' || hostHeader.length > 253) return null;
-  const host = hostHeader.trim().toLowerCase().replace(/\\.$/,'').replace(/:\\d+$/,'');
+  const host = hostHeader.trim().toLowerCase().replace(/\.$/,'').replace(/:\d+$/,'');
   const root = rootDomain.toLowerCase();
   if (host === root || host === 'www.' + root) return {kind:'marketing'};
   if (!host.endsWith('.' + root)) return null;
@@ -52,7 +52,7 @@ export function splitCreatorRevenue(netCents, creatorShareBps=8000) {
 export function validateLeadInput(input) {
   if (!input || typeof input !== 'object') throw new Error('Invalid lead');
   const email = typeof input.email === 'string' ? input.email.trim().toLowerCase() : '';
-  if (email.length > 254 || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) throw new Error('Invalid email');
+  if (email.length > 254 || !/^[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(email)) throw new Error('Invalid email');
   if (typeof input.source !== 'string' || !['quiz','gift','manual','landing'].includes(input.source)) throw new Error('Invalid source');
   if (typeof input.marketingConsent !== 'boolean') throw new Error('Explicit consent flag required');
   return {email,source:input.source,marketingConsent:input.marketingConsent};
