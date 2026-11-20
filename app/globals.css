@@ -54,3 +54,18 @@ a:active {
   background: var(--rmp-orange);
   color: #101010;
 }
+
+/* Velora UI marquee styles (MIT vendored component). */
+@keyframes rmp-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--gap))); }
+}
+@keyframes rmp-marquee-vertical {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-100% - var(--gap))); }
+}
+.animate-marquee { animation: rmp-marquee var(--duration, 40s) linear infinite; }
+.animate-marquee-vertical { animation: rmp-marquee-vertical var(--duration, 40s) linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee, .animate-marquee-vertical { animation: none !important; }
+}
