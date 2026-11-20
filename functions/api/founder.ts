@@ -2,7 +2,7 @@
 // The static Next.js export is served by Pages; only this POST executes at the edge.
 // No public GET endpoint exposing stored personal information.
 interface Env {
-  RMP_LEADS: D1Database;
+  RMP_LEADS: { prepare(sql:string): { bind(...values:unknown[]): {run():Promise<unknown>} } };
 }
 interface PagesContext {
   request: Request;
