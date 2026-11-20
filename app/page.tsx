@@ -45,7 +45,9 @@ export default function Home() {
           <nav className="hidden items-center gap-7 font-mono text-[10px] font-black uppercase tracking-[.13em] md:flex" aria-label="Navigazione principale">
             <a href="#cosa-facciamo" className="hover:underline">Cosa facciamo</a>
             <a href="#metodo" className="hover:underline">Metodo</a>
+            <Link href="/about" className="hover:underline">Studio</Link>
             <Link href="/creator-studio" className="hover:underline">Founder</Link>
+            <Link href="/en" className="hover:underline">EN</Link>
             <Link href="/contact" className="hover:underline">Contatti</Link>
           </nav>
           <Link href="/contact" className="border-2 border-black bg-black px-4 py-3 font-mono text-[10px] font-black uppercase tracking-[.1em] text-white transition-colors hover:bg-[#e93625] hover:text-black sm:px-6">PARLIAMONE ↗</Link>
@@ -123,7 +125,7 @@ export default function Home() {
         <div className={frame+" flex flex-wrap items-center justify-between gap-5 py-8"}>
           <Link href="/" aria-label="RMP Works — homepage"><Brand/></Link>
           <div className="flex flex-wrap gap-6 font-mono text-[10px] font-black uppercase tracking-[.08em]">
-            <Link href="/creator-studio">Founder</Link><Link href="/contact">Contatti</Link><a href={rmpPhone.href}>Chiama</a>
+            <Link href="/about">Studio</Link><Link href="/creator-studio">Founder</Link><Link href="/contact">Contatti</Link><Link href="/en">EN</Link><a href={rmpPhone.href}>Chiama</a>
           </div>
           <span className="font-mono text-[9px] text-[#68635d]">© 2026 RMP WORKS</span>
         </div>

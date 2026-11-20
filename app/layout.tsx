@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     default: "RMP Works | Strumenti e prodotti digitali per creator",
     template: "%s — RMP Works",
   },
-  description: "RMP Works aiuta i piccoli content creator a costruire prodotti digitali, risorse gratuite e percorsi di monetizzazione. Scopri Creator Studio e gli altri progetti.",
+  description: "RMP Works aiuta i creator indipendenti a progettare prodotti digitali, risorse gratuite e percorsi di vendita. Scopri Creator Studio e il programma Founder.",
   metadataBase: new URL("https://rmpworks.com"),
   other: {
     "contact:telephone": rmpPhone.international,
