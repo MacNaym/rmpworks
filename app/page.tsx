@@ -40,7 +40,7 @@ export default function Home() {
           <Link href="#come-funziona" className="hover:text-[#1d4ed8]">Come funziona</Link>
           <Link href="#prodotti" className="hover:text-[#1d4ed8]">Il metodo</Link>
           <Link href="/creator-studio" className="hover:text-[#1d4ed8]">Founder</Link>
-          <Link href="/projects" className="hover:text-[#1d4ed8]">Altri progetti</Link>
+          <Link href="/design-lab" className="hover:text-[#1d4ed8]">Laboratorio grafico</Link>
         </nav>
         <Link href="/creator-studio" className="rounded-full bg-[#111827] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-[#1d4ed8] sm:text-sm">Scopri Creator Studio</Link>
       </div>
@@ -77,10 +77,7 @@ export default function Home() {
         <Link href="/creator-studio" className={button}>Dettagli del programma →</Link>
       </div>
     </section>
-    <section className={`${frame} grid gap-7 py-20 md:grid-cols-2 md:items-center`}>
-      <div><p className="text-xs font-semibold uppercase tracking-widest text-[#2563eb]">Siamo uno studio di prodotti</p><h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-5xl">RMP Works non è solo Creator Studio.</h2><p className="mt-5 leading-8 text-[#556174]">I nostri prodotti aziendali, incluso Regolario, rimangono disponibili.</p></div>
-      <div className="flex flex-wrap gap-3 md:justify-end"><Link href="/projects/regolario" className={outline}>Scopri Regolario →</Link><Link href="/projects" className={outline}>Tutti i progetti →</Link></div>
-    </section>
-    <footer className="bg-[#111827] py-10 text-sm text-[#c2cad8]"><div className={`${frame} flex flex-col justify-between gap-6 sm:flex-row sm:items-center`}><div><p className="font-bold text-white">RMP WORKS</p><p className="mt-1">© 2026 RMP Works · Creator Studio</p></div><div className="flex flex-wrap gap-5"><Link href="/projects">Progetti</Link><Link href="/about">Chi siamo</Link><Link href="/contact">Contatti</Link><a href={rmpPhone.href}>{rmpPhone.display}</a></div></div></footer>
+    
+    <footer className="bg-[#111827] py-10 text-sm text-[#c2cad8]"><div className={`${frame} flex flex-col justify-between gap-6 sm:flex-row sm:items-center`}><div><p className="font-bold text-white">RMP WORKS</p><p className="mt-1">© 2026 RMP Works · Creator Studio</p></div><div className="flex flex-wrap gap-5"><Link href="/design-lab">Design Lab</Link><Link href="/about">Chi siamo</Link><Link href="/contact">Contatti</Link><a href={rmpPhone.href}>{rmpPhone.display}</a></div></div></footer>
   </main>;
 }
