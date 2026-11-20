@@ -4,76 +4,31 @@ import { rmpPhone } from "../contact-details";
 
 export const metadata: Metadata = {
   title: "Contatti | RMP Works",
-  description:
-    "Per informazioni su Regolario, assessment e partnership: il canale pubblico di supporto Regolario.",
+  description: "Contatta RMP Works per Creator Studio, collaborazione creator e progetti. Per Regolario rimane disponibile il canale dedicato.",
 };
-
-const frame = "mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12 xl:px-16";
-
-function BrandMark() {
-  return (
-    <span className="inline-flex h-7 items-end gap-1" aria-hidden>
-      <span className="h-3 w-3 -skew-x-12 bg-[var(--rmp-purple)]" />
-      <span className="h-5 w-3 -skew-x-12 bg-[var(--rmp-green)]" />
-      <span className="h-7 w-3 -skew-x-12 bg-[var(--rmp-orange)]" />
-    </span>
-  );
-}
-
+const frame = "mx-auto w-full max-w-6xl px-5 sm:px-8 lg:px-12";
 export default function ContactPage() {
-  return (
-    <main className="min-h-screen overflow-x-clip bg-[var(--background)] text-[var(--foreground)]">
-      <header className="border-b border-[var(--line)]">
-        <div className={`${frame} flex items-center justify-between py-5`}>
-          <Link href="/" className="flex items-center gap-3 text-base font-bold tracking-[-0.03em]">
-            <BrandMark />
-            <span>RMP WORKS</span>
-          </Link>
-          <nav className="flex items-center gap-5 text-sm text-[var(--muted)] sm:gap-8">
-            <Link className="transition hover:text-[var(--rmp-purple)]" href="/projects">Progetti</Link>
-            <Link className="transition hover:text-[var(--rmp-purple)]" href="/about">Chi siamo</Link>
-            <Link className="text-[var(--foreground)]" href="/contact">Contatti</Link>
-          </nav>
+  return <main className="min-h-screen bg-[#f8fafc] text-[#111827]">
+    <header className="border-b border-[#e2e8f0] bg-white"><div className={`${frame} flex min-h-20 items-center justify-between`}><Link href="/" className="font-bold tracking-tight">RMP WORKS</Link><Link href="/" className="text-sm text-[#475569]">← Home</Link></div></header>
+    <section className={`${frame} py-20 sm:py-28`}>
+      <p className="text-xs font-bold uppercase tracking-widest text-[#2563eb]">Parliamone</p>
+      <h1 className="mt-5 max-w-4xl text-[clamp(3.5rem,8vw,7rem)] font-semibold leading-[.95] tracking-[-.065em]">Da un'idea a qualcosa di concreto.</h1>
+      <p className="mt-7 max-w-3xl text-lg leading-8 text-[#526176]">Se hai un canale e vuoi creare il tuo primo prodotto digitale, possiamo iniziare parlando del pubblico che ti segue e di cosa gli serve davvero.</p>
+      <div className="mt-12 grid gap-5 md:grid-cols-2">
+        <div className="rounded-2xl border border-[#dce5f3] bg-white p-8">
+          <h2 className="text-2xl font-semibold">Creator Studio</h2>
+          <p className="mt-3 leading-7 text-[#526176]">Informazioni sul programma Founder, progetti e collaborazioni.</p>
+          <a className="mt-7 inline-flex rounded-full bg-[#111827] px-6 py-3 text-sm font-semibold text-white hover:bg-[#1d4ed8]" href={rmpPhone.href}>Chiama {rmpPhone.display}</a>
+          <p className="mt-4 text-xs leading-6 text-[#64748b]">Stiamo preparando un modulo dedicato: per ora utilizza il contatto aziendale.</p>
         </div>
-      </header>
-
-      <section className={`${frame} grid min-h-[72vh] content-center py-16 sm:py-24`}>
-        <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--rmp-purple)]">Contatti Regolario</p>
-        <h1 className="mt-6 max-w-5xl text-[clamp(3.5rem,8vw,8rem)] font-semibold leading-[0.88] tracking-[-0.07em]">
-          Parliamone,
-          <br />
-          senza altre <span className="text-[var(--rmp-orange)]">scartoffie.</span>
-        </h1>
-        <div className="mt-12 max-w-2xl border-t border-[var(--line)] pt-7">
-          <p className="text-lg leading-8 text-[var(--muted)]">
-            Per informazioni su Regolario, assessment e possibili partnership, puoi scrivere al canale pubblico di supporto Regolario.
-          </p>
-          <a
-            href="mailto:supporto@regolario.com"
-            className="mt-7 inline-flex w-fit items-center gap-3 rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]"
-          >
-            Scrivi a supporto@regolario.com <span aria-hidden>↗</span>
-          </a>
-          <a
-            href={rmpPhone.href}
-            className="mt-3 inline-flex w-fit items-center gap-3 rounded-full border border-[var(--line)] px-6 py-3 text-sm font-semibold transition hover:border-[var(--rmp-purple)] hover:text-[var(--rmp-purple)]"
-          >
-            Chiama RMP Works: {rmpPhone.display}
-          </a>
-          <p className="mt-6 text-sm leading-6 text-[var(--muted)]">
-            Il supporto email riguarda Regolario. Per RMP Works puoi chiamare il numero aziendale qui sopra.
-          </p>
+        <div className="rounded-2xl border border-[#dce5f3] bg-white p-8">
+          <h2 className="text-2xl font-semibold">Regolario</h2>
+          <p className="mt-3 leading-7 text-[#526176]">Assistenza, AI Literacy e richieste relative alla piattaforma Regolario.</p>
+          <a className="mt-7 inline-flex rounded-full border border-[#cdd7e7] px-6 py-3 text-sm font-semibold hover:text-[#1d4ed8]" href="mailto:supporto@regolario.com">supporto@regolario.com ↗</a>
+          <div className="mt-5"><Link className="text-sm font-medium text-[#2563eb]" href="/projects/regolario">Scopri Regolario →</Link></div>
         </div>
-      </section>
-      <footer className="bg-[#101010] text-white">
-        <div className={`${frame} flex flex-col gap-5 py-9 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between`}>
-          <div className="flex items-center gap-3"><BrandMark /><span className="font-semibold text-white">RMP WORKS</span></div>
-          <div className="flex flex-wrap gap-x-6 gap-y-3">
-            <a className="transition hover:text-[var(--rmp-purple)]" href={rmpPhone.href}>{rmpPhone.display}</a>
-            <Link className="transition hover:text-[var(--rmp-purple)]" href="/projects/regolario">Scopri Regolario</Link>
-          </div>
-        </div>
-      </footer>
-    </main>
-  );
+      </div>
+    </section>
+    <footer className="bg-[#111827] py-10 text-sm text-white/70"><div className={`${frame} flex flex-wrap justify-between gap-5`}><span>© 2026 RMP Works</span><div className="flex gap-5"><Link href="/creator-studio">Creator Studio</Link><Link href="/projects">Progetti</Link></div></div></footer>
+  </main>;
 }
