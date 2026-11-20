@@ -24,14 +24,14 @@ function StencilPunch(){
      <header className="flex items-center justify-between gap-3 border-b-[5px] border-black pb-5"><span className="bg-black px-3 py-2 text-xl font-black tracking-[-.06em] text-white sm:text-2xl">RMP/WORKS.</span><span className="hidden text-xs font-black uppercase tracking-[.22em] sm:block">Creator business department</span><span className="rounded-full border-2 border-black bg-[#faff4e] px-4 py-2 text-xs font-black">ED. 001</span></header>
      <div className="grid border-b-[5px] border-black lg:grid-cols-[1.38fr_.62fr]">
        <div className="relative overflow-hidden border-black py-14 lg:border-r-[5px] lg:py-20">
-         <p className="mb-8 inline-block -rotate-2 border-[3px] border-black bg-[#ff7351] px-5 py-3 text-sm font-black uppercase shadow-[5px_5px_0_#111]">Basta lavorare gratis per l'algoritmo.</p>
+         <p className="mb-8 inline-block -rotate-2 border-[3px] border-black bg-[#ff7351] px-5 py-3 text-sm font-black uppercase shadow-[5px_5px_0_#111]">Basta lavorare gratis per l&apos;algoritmo.</p>
          <h2 className="max-w-5xl text-[clamp(5.5rem,12vw,12.8rem)] font-black uppercase leading-[.78] tracking-[-.12em]">IL TUO<br/>CANALE.<br/><span className="text-[#fa5135]">IL TUO</span><br/>BUSINESS.</h2>
          <p className="mt-12 max-w-2xl text-xl font-bold leading-[1.28] md:text-2xl">Trasforma quello che insegni in prodotti digitali acquistabili dalla tua community.</p>
          <Link href="/creator-studio" className="mt-9 inline-flex border-[3px] border-black bg-[#faff4e] px-8 py-5 text-sm font-black uppercase tracking-wide shadow-[7px_7px_0_#111] transition-transform hover:-translate-y-1">Scopri Founder ↗</Link>
        </div>
        <aside className="flex flex-col justify-between border-t-[5px] border-black bg-[#faff4e] p-7 lg:border-t-0 lg:p-10">
          <div><p className="text-xs font-black uppercase tracking-[.25em]">Qui non vendiamo follower.</p><div className="my-12 -rotate-[7deg] border-[5px] border-black bg-white p-7 shadow-[12px_12px_0_#111]"><p className="text-sm font-black uppercase">Il tuo primo prodotto</p><p className="mt-8 text-6xl font-black leading-[.9] tracking-tight">È ORA<br/>DI FARLO.</p><p className="mt-7 text-xs font-bold uppercase tracking-widest">Ideato insieme. Venduto da te.</p></div></div>
-         <p className="text-base font-bold leading-relaxed">Creiamo una pagina, un primo prodotto e un percorso di vendita. Senza aprire un'agenzia né imparare a programmare.</p>
+         <p className="text-base font-bold leading-relaxed">Creiamo una pagina, un primo prodotto e un percorso di vendita. Senza aprire un&apos;agenzia né imparare a programmare.</p>
        </aside>
      </div>
      <div className="border-b-[5px] border-black py-5"><Marquee repeat={3} fade={false} className="[--duration:28s] [--gap:2.5rem]">{strips.map(x=><span key={x} className="whitespace-nowrap text-xl font-black uppercase italic tracking-tight">✳ {x}</span>)}</Marquee></div>
