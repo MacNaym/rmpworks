@@ -21,7 +21,8 @@ create table if not exists public.creator_accounts (
 );
 alter table public.creator_accounts enable row level security;
 revoke all on public.creator_accounts from anon;
-grant select,insert,update on public.creator_accounts to authenticated;
+grant select,insert on public.creator_accounts to authenticated;
+grant update(display_name,channel_url,slug,onboarding_step,audience,topic,lead_magnet_idea,micro_product_idea,premium_product_idea,style_notes,updated_at) on public.creator_accounts to authenticated;
 create policy "creator owner reads own account" on public.creator_accounts for select to authenticated
   using ((select auth.uid()) = owner_user_id and (select auth.uid()) is not null);
 create policy "creator owner creates own account" on public.creator_accounts for insert to authenticated
@@ -29,8 +30,8 @@ create policy "creator owner creates own account" on public.creator_accounts for
 create policy "creator owner updates own account" on public.creator_accounts for update to authenticated
   using ((select auth.uid()) = owner_user_id and (select auth.uid()) is not null)
   with check ((select auth.uid()) = owner_user_id and (select auth.uid()) is not null);
--- IMPORTANT: owner can update status until stronger role-specific privileged API added;
--- do NOT use status as authorization for provisioning or delivery. Provisioning requires server-only verification.
+-- status and owner_user_id are not updatable by the browser role.
+-- Provisioning must additionally require a signed Stripe confirmation and trusted server action.
 create table if not exists public.creator_orders (
  id uuid primary key default gen_random_uuid(),
  creator_account_id uuid not null references public.creator_accounts(id) on delete restrict,
