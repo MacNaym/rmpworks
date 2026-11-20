@@ -47,6 +47,7 @@ export default function Home() {
             <a href="#metodo" className="hover:underline">Metodo</a>
             <Link href="/about" className="hover:underline">Studio</Link>
             <Link href="/creator-studio" className="hover:underline">Founder</Link>
+            <Link href="/demo" className="hover:underline">Demo</Link>
             <Link href="/en" className="hover:underline">EN</Link>
             <Link href="/contact" className="hover:underline">Contatti</Link>
           </nav>
@@ -125,7 +126,7 @@ export default function Home() {
         <div className={frame+" flex flex-wrap items-center justify-between gap-5 py-8"}>
           <Link href="/" aria-label="RMP Works — homepage"><Brand/></Link>
           <div className="flex flex-wrap gap-6 font-mono text-[10px] font-black uppercase tracking-[.08em]">
-            <Link href="/about">Studio</Link><Link href="/creator-studio">Founder</Link><Link href="/contact">Contatti</Link><Link href="/en">EN</Link><a href={rmpPhone.href}>Chiama</a>
+            <Link href="/about">Studio</Link><Link href="/demo">Demo</Link><Link href="/privacy">Privacy</Link><Link href="/creator-studio">Founder</Link><Link href="/contact">Contatti</Link><Link href="/en">EN</Link><a href={rmpPhone.href}>Chiama</a>
           </div>
           <span className="font-mono text-[9px] text-[#68635d]">© 2026 RMP WORKS</span>
         </div>

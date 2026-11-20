@@ -35,7 +35,7 @@ export default function Founder(){
    <div className="flex flex-col justify-between bg-[#e93625] p-7 sm:p-10 lg:p-12">
     <div className="flex justify-between border-b-2 border-black pb-4 font-mono text-[10px] font-black uppercase tracking-[.13em]"><span>FIG. 01 / FOUNDER OFFER</span><span>20–30 NOV 2026</span></div>
     <div className="py-12"><p className={eyebrow}>ATTIVAZIONE UNA TANTUM / PREZZO PROPOSTO</p><p className="mt-4 text-[clamp(5.5rem,11vw,10rem)] font-black leading-none tracking-[-.105em]">50 €</p><p className="mt-2 text-2xl font-black uppercase">+ IVA applicabile</p><p className="mt-6 max-w-lg text-sm font-semibold leading-7">Prezzo ordinario pianificato: 169 € + IVA dal 1° dicembre 2026. Non è un prezzo precedente. Formula soggetta alle condizioni definitive.</p></div>
-    <div><Link href="/contact" className={textButton+" w-full sm:w-auto"}>CHIEDI L&apos;ATTIVAZIONE ↗</Link><p className="mt-4 text-xs font-semibold leading-6">Nessun pagamento su questa pagina. Prima ricevi attività, condizioni e tempistiche.</p></div>
+    <div><Link href="/contact#richiesta-founder" className={textButton+" w-full sm:w-auto"}>CHIEDI L&apos;ATTIVAZIONE ↗</Link><p className="mt-4 text-xs font-semibold leading-6">Nessun pagamento su questa pagina. Lascia i tuoi recapiti e ti contatteremo per condizioni e tempistiche.</p></div>
    </div>
   </section>
   <section className={frame+" py-20 sm:py-24"}>
@@ -45,6 +45,7 @@ export default function Founder(){
     <p className="font-mono text-xs font-black text-[#e93625]">{n} / INCLUSO</p><h3 className="mt-8 text-2xl font-black uppercase tracking-[-.045em]">{title}</h3><p className="mt-4 text-sm leading-7 text-[#4a4642]">{desc}</p>
    </article>)}</div>
   </section>
+  <section className="border-t-2 border-black bg-[#f4f2ed] py-14"><div className={frame+" flex flex-wrap items-center justify-between gap-6"}><div><p className={eyebrow+" text-[#e93625]"}>[ VUOI VEDERE UN ESEMPIO? ]</p><h2 className="mt-4 text-[clamp(2.2rem,4vw,4rem)] font-black uppercase leading-[.9] tracking-[-.06em]">PRIMA DI DECIDERE, PROVA LA DEMO.</h2><p className="mt-4 max-w-2xl text-sm leading-7">Una pagina creator dimostrativa con un quiz realmente interattivo e prodotti puramente illustrativi.</p></div><Link href="/demo" className={textButton}>APRI LA DEMO ↗</Link></div></section>
   <section className="grid border-y-2 border-black lg:grid-cols-2">
    <div className="border-b-2 border-black bg-[#171615] p-7 text-[#f4f2ed] sm:p-12 lg:border-b-0 lg:border-r-2">
     <p className={eyebrow+" text-[#ff513c]"}>[ IL PERCORSO ]</p><h2 className="mt-6 text-[clamp(3rem,5vw,5.4rem)] font-black uppercase leading-[.9] tracking-[-.07em]">PRIMA<br/>PARLIAMO.<br/>POI CREIAMO.</h2>
