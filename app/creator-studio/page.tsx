@@ -35,7 +35,7 @@ export default function Founder(){
    <div className="flex flex-col justify-between bg-[#e93625] p-7 sm:p-10 lg:p-12">
     <div className="flex justify-between border-b-2 border-black pb-4 font-mono text-[10px] font-black uppercase tracking-[.13em]"><span>FIG. 01 / FOUNDER OFFER</span><span>20–30 NOV 2026</span></div>
     <div className="py-12"><p className={eyebrow}>ATTIVAZIONE UNA TANTUM / PREZZO PROPOSTO</p><p className="mt-4 text-[clamp(5.5rem,11vw,10rem)] font-black leading-none tracking-[-.105em]">50 €</p><p className="mt-2 text-2xl font-black uppercase">+ IVA applicabile</p><p className="mt-6 max-w-lg text-sm font-semibold leading-7">Prezzo ordinario pianificato: 169 € + IVA dal 1° dicembre 2026. Non è un prezzo precedente. Formula soggetta alle condizioni definitive.</p></div>
-    <div><Link href="/contact" className={textButton+" w-full sm:w-auto"}>CHIEDI L&apos;ATTIVAZIONE ↗</Link><p className="mt-4 text-xs font-semibold leading-6">Nessun pagamento su questa pagina. Prima ricevi attività, condizioni e tempistiche.</p></div>
+    <div><Link href="/contact#richiesta-founder" className={textButton+" w-full sm:w-auto"}>CHIEDI L&apos;ATTIVAZIONE ↗</Link><p className="mt-4 text-xs font-semibold leading-6">Nessun pagamento su questa pagina. Lascia i tuoi recapiti e ti contatteremo per condizioni e tempistiche.</p></div>
    </div>
   </section>
   <section className={frame+" py-20 sm:py-24"}>
