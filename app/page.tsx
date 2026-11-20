@@ -1,182 +1,86 @@
 import Link from "next/link";
-import { rmpPhone } from "./contact-details";
 import type { Metadata } from "next";
+import { rmpPhone } from "./contact-details";
 
 export const metadata: Metadata = {
-  title: "RMP Works | Tu usa l'AI. Noi mettiamo in ordine la burocrazia.",
-  description:
-    "Tutta la formazione e la documentazione AI della tua azienda, finalmente organizzate. Con Regolario.",
+  title: "RMP Works | Dal tuo canale al tuo primo prodotto digitale",
+  description: "RMP Creator Studio aiuta i piccoli content creator a creare una vetrina, un lead magnet e il primo prodotto digitale. Scopri come funziona il programma Founder.",
   openGraph: {
-    title: "Tu usa l'AI. Noi mettiamo in ordine la burocrazia.",
-    description:
-      "Formazione, attestati, registri e documentazione AI della tua azienda, finalmente organizzate.",
+    title: "Hai un pubblico. Ti aiutiamo a trasformarlo in un business.",
+    description: "Dalla prima idea al primo prodotto digitale: un percorso concreto per creator indipendenti.",
   },
 };
 
-const ventures = [
-  { index: "01", name: "Regolario", tag: "AI in azienda, senza scartoffie", description: "Formazione e documentazione AI finalmente organizzate in un unico posto.", href: "/projects/regolario", color: "var(--rmp-purple)", commercialVisible: true },
-  { index: "02", name: "ShopShield", tag: "Compliance e-commerce", description: "Uno strato di compliance essenziale per piccoli business online che vogliono protezione senza complessità enterprise.", href: "/projects/shopshield", color: "var(--rmp-green)", commercialVisible: false },
-  { index: "03", name: "Tap", tag: "Strumenti per attività locali", description: "NFC e QR che trasformano un'interazione fisica con il cliente in un'azione digitale utile in pochi secondi.", href: "/projects/tap", color: "var(--rmp-orange)", commercialVisible: false },
+const frame = "mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12";
+const button = "inline-flex items-center justify-center rounded-full bg-[#111827] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#1d4ed8]";
+const outline = "inline-flex items-center justify-center rounded-full border border-[#cdd7e7] px-6 py-3.5 text-sm font-semibold transition hover:border-[#2563eb] hover:text-[#1d4ed8]";
+
+const steps = [
+  { no: "01", title: "Troviamo il prodotto giusto", desc: "Partiamo dai tuoi contenuti e dalle domande della tua community: una proposta utile, non un prodotto a caso." },
+  { no: "02", title: "Prepariamo il tuo spazio", desc: "Costruiamo una pagina a tuo marchio, una risorsa gratuita e il percorso verso il primo acquisto." },
+  { no: "03", title: "Tu presenti, noi gestiamo", desc: "Condividi il link con il pubblico. Noi prepariamo la parte tecnica, la consegna e il supporto concordato." },
 ];
 
-const frame = "mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12 xl:px-16";
-const purpleHover = "transition hover:text-[var(--rmp-purple)]";
-const assessmentHref = "https://regolario.com/assessment-gratuito?source=rmpworks&utm_source=rmpworks&utm_medium=website&utm_campaign=assessment_2026&utm_content=rmp_home_hero";
+const tiers = [
+  { label: "Gratuito", price: "0 €", text: "Una risorsa o un quiz per dare valore e raccogliere contatti con consenso." },
+  { label: "Primo prodotto", price: "5–15 €", text: "Una soluzione piccola e immediata per chi vuole iniziare." },
+  { label: "Intermedio", price: "29–79 €", text: "Un percorso o strumento più completo, da realizzare insieme." },
+  { label: "Premium", price: "Su progetto", text: "Corso e prodotti avanzati: solo con materiali e metodo verificati." },
+];
 
-function BrandMark() {
-  return (
-    <span className="inline-flex h-7 items-end gap-1" aria-hidden>
-      <span className="h-3 w-3 -skew-x-12 bg-[var(--rmp-purple)]" />
-      <span className="h-5 w-3 -skew-x-12 bg-[var(--rmp-green)]" />
-      <span className="h-7 w-3 -skew-x-12 bg-[var(--rmp-orange)]" />
-    </span>
-  );
+function Mark() {
+  return <span className="inline-flex items-end gap-1" aria-hidden="true"><span className="h-3 w-2 -skew-x-12 bg-[#2563eb]"/><span className="h-5 w-2 -skew-x-12 bg-[#2563eb]"/><span className="h-7 w-2 -skew-x-12 bg-[#2563eb]"/></span>;
 }
-
 export default function Home() {
-  return (
-    <main className="min-h-screen overflow-x-clip bg-[var(--background)] text-[var(--foreground)]">
-      <header className="border-b border-[var(--line)]">
-        <div className={`${frame} flex items-center justify-between py-5`}>
-          <Link href="/" className="flex items-center gap-3 text-base font-bold tracking-[-0.03em]">
-            <BrandMark />
-            <span>RMP WORKS</span>
-          </Link>
-
-          <div className="flex items-center gap-5 sm:gap-8">
-            <nav className="hidden items-center gap-5 text-sm text-[var(--muted)] sm:flex sm:gap-8">
-              <Link className={purpleHover} href="/projects">Progetti</Link>
-              <Link className={purpleHover} href="/about">Chi siamo</Link>
-              <Link className={purpleHover} href="/contact">Contatti</Link>
-            </nav>
-            <div className="flex items-center gap-1 rounded-full border border-[var(--line)] p-1 text-xs font-semibold">
-              <span className="rounded-full bg-[#101010] px-2.5 py-1 text-white">IT</span>
-              <Link href="/en/" className="rounded-full px-2.5 py-1 text-[var(--muted)] transition hover:text-[var(--rmp-purple)]">EN</Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <section className={`${frame} grid min-h-[76vh] content-between py-8 sm:py-12 lg:py-14`}>
-        <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
-          <span className="h-2 w-2 rounded-full bg-[var(--rmp-purple)]" />
-          RMP Works presenta Regolario
-        </div>
-
-        <div className="py-16 sm:py-24 lg:py-28">
-          <h1 className="max-w-[1420px] text-[clamp(4rem,9vw,10rem)] font-semibold leading-[0.84] tracking-[-0.075em]">
-            Tu usa l&apos;AI.
-            <br />
-            Noi mettiamo in ordine
-            <br /><span className="text-[var(--rmp-orange)]">la burocrazia.</span>
-          </h1>
-        </div>
-
-        <div className="grid gap-8 border-t border-[var(--line)] pt-6 md:grid-cols-12">
-          <p className="max-w-2xl text-lg leading-7 text-[var(--muted)] md:col-span-7 md:text-xl md:leading-8">
-            Formazione, attestati, registri e documentazione: Regolario ti aiuta a gestire tutto in un unico posto, senza rincorrere fogli Excel, scadenze e documenti sparsi.
-          </p>
-          <div className="flex flex-wrap items-end gap-3 md:col-span-4 md:col-start-9 md:justify-end">
-            <Link href="/projects/regolario" className="inline-flex items-center gap-3 rounded-full bg-[#101010] px-5 py-2.5 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]">
-              Scopri Regolario <span aria-hidden>→</span>
-            </Link>
-            <a href={assessmentHref} className="inline-flex items-center gap-3 rounded-full border border-[var(--line)] px-5 py-2.5 text-sm font-medium transition hover:border-[var(--rmp-purple)] hover:text-[var(--rmp-purple)]">
-              Fai l&apos;assessment <span aria-hidden>↗</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section id="work" className="border-y border-[var(--line)] bg-[#101010] text-[#f4f1ea]">
-        <div className={`${frame} py-16 sm:py-20 lg:py-24`}>
-          <div className="border-b border-white/20 pb-10">
-            <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">Progetti attuali</p>
-            <h2 className="mt-6 max-w-6xl text-4xl font-semibold tracking-[-0.045em] sm:text-5xl lg:text-7xl">Prodotti veri per problemi veri.</h2>
-          </div>
-
-          <div>
-            {ventures.filter((venture) => venture.commercialVisible).map((venture) => (
-              <Link href={venture.href} key={venture.name} className="group grid gap-6 border-b border-white/20 py-9 transition hover:border-white/60 md:grid-cols-12 md:items-start">
-                <span className="font-mono text-xs md:col-span-1" style={{ color: venture.color }}>{venture.index}</span>
-                <div className="md:col-span-4">
-                  <p className="text-3xl font-medium tracking-[-0.04em] sm:text-4xl">{venture.name}</p>
-                  <p className="mt-2 text-sm text-white/55">{venture.tag}</p>
-                </div>
-                <p className="max-w-3xl text-base leading-7 text-white/70 md:col-span-5">{venture.description}</p>
-                <div className="text-right text-2xl transition-all group-hover:translate-x-1 group-hover:text-[var(--rmp-purple)] md:col-span-2">→</div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="pt-10">
-            <Link href="/projects" className="inline-flex rounded-full border border-white/35 px-5 py-2.5 text-sm transition hover:border-[var(--rmp-purple)] hover:bg-[var(--rmp-purple)] hover:text-white">Tutti i progetti</Link>
-          </div>
-        </div>
-      </section>
-
-      <section className={`${frame} py-20 sm:py-28 lg:py-32`}>
-        <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">Come lavoriamo</p>
-
-        <h2 className="mt-6 max-w-6xl text-4xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl lg:text-8xl">
-          Team piccoli.
-          <br />
-          Decisioni veloci.
-          <br />
-          <span className="text-[var(--rmp-green)]">Risultati utili.</span>
-        </h2>
-
-        <div className="mt-14 grid gap-0 border-y border-[var(--line)] md:grid-cols-3">
-          <div className="py-8 md:pr-8">
-            <p className="font-mono text-xs text-[var(--rmp-purple)]">01 / FOCUS</p>
-            <p className="mt-4 max-w-md leading-7">Risolviamo un problema che conta prima di aggiungere dieci funzioni che nessuno ha chiesto.</p>
-          </div>
-          <div className="border-t border-[var(--line)] py-8 md:border-l md:border-t-0 md:px-8">
-            <p className="font-mono text-xs text-[var(--rmp-green)]">02 / SPEDISCI</p>
-            <p className="mt-4 max-w-md leading-7">Mettiamo presto prodotti funzionanti davanti a persone reali e miglioriamo usando evidenze.</p>
-          </div>
-          <div className="border-t border-[var(--line)] py-8 md:border-l md:border-t-0 md:pl-8">
-            <p className="font-mono text-xs text-[var(--rmp-orange)]">03 / SISTEMATIZZA</p>
-            <p className="mt-4 max-w-md leading-7">Automatizziamo il lavoro ripetibile così il prodotto può crescere senza far crescere la burocrazia.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[var(--rmp-orange-panel)] text-[#101010]">
-        <div className={`${frame} grid min-h-[54vh] content-between py-10 sm:py-14`}>
-          <div className="flex items-center gap-3">
-            <span className="h-px w-10 bg-[var(--rmp-purple)]" />
-            <p className="font-mono text-xs uppercase tracking-[0.16em] text-black/55">RMP Works</p>
-          </div>
-
-          <div className="py-16 sm:py-20">
-            <h2 className="max-w-7xl text-[clamp(3.5rem,7.5vw,8rem)] font-semibold leading-[0.88] tracking-[-0.07em]">
-              Costruiamo la prossima
-              <br />
-              cosa utile.
-            </h2>
-          </div>
-
-          <div className="flex flex-col gap-5 border-t border-black/25 pt-6 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-xl text-black/70">Prodotti, esperimenti e business con una ragione per esistere.</p>
-            <Link href="/contact" className="inline-flex w-fit rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]">Parliamone →</Link>
-          </div>
-        </div>
-      </section>
-
-      <footer className="bg-[#101010] text-white">
-        <div className={`${frame} flex flex-col gap-8 py-10 md:flex-row md:items-end md:justify-between`}>
-          <div>
-            <div className="flex items-center gap-3"><BrandMark /><p className="text-lg font-semibold tracking-[-0.03em]">RMP WORKS</p></div>
-            <p className="mt-2 text-sm text-white/45">© 2026 RMP Works</p>
-            <a className="mt-2 inline-flex text-sm text-white/60 transition hover:text-[var(--rmp-purple)]" href={rmpPhone.href}>{rmpPhone.display}</a>
-          </div>
-          <div className="flex items-center gap-6 text-sm text-white/60">
-            <Link className="transition hover:text-[var(--rmp-purple)]" href="/projects">Progetti</Link>
-            <Link className="transition hover:text-[var(--rmp-purple)]" href="/about">Chi siamo</Link>
-            <Link className="transition hover:text-[var(--rmp-purple)]" href="/contact">Contatti</Link>
-          </div>
-        </div>
-      </footer>
-    </main>
-  );
+  return <main className="min-h-screen bg-[#f8fafc] text-[#101827]">
+    <header className="border-b border-[#e4eaf3] bg-white">
+      <div className={`${frame} flex min-h-20 items-center justify-between gap-4`}>
+        <Link href="/" className="flex items-center gap-3 font-bold tracking-tight"><Mark/>RMP WORKS</Link>
+        <nav aria-label="Navigazione principale" className="hidden items-center gap-6 text-sm font-medium text-[#4b5563] md:flex">
+          <Link href="#come-funziona" className="hover:text-[#1d4ed8]">Come funziona</Link>
+          <Link href="#prodotti" className="hover:text-[#1d4ed8]">Il metodo</Link>
+          <Link href="/creator-studio" className="hover:text-[#1d4ed8]">Founder</Link>
+          <Link href="/projects" className="hover:text-[#1d4ed8]">Altri progetti</Link>
+        </nav>
+        <Link href="/creator-studio" className="rounded-full bg-[#111827] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-[#1d4ed8] sm:text-sm">Scopri Creator Studio</Link>
+      </div>
+    </header>
+    <section className={`${frame} grid gap-12 py-20 sm:py-28 lg:grid-cols-12 lg:items-end lg:py-32`}>
+      <div className="lg:col-span-9">
+        <p className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#dbe5f9] bg-[#edf4ff] px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#2458b5]">RMP Creator Studio · Per piccoli creator</p>
+        <h1 className="max-w-5xl text-[clamp(3.3rem,7.4vw,7.8rem)] font-semibold leading-[.96] tracking-[-.07em]">Hai un pubblico.<br/><span className="text-[#2563eb]">Costruiamoci qualcosa.</span></h1>
+        <p className="mt-9 max-w-3xl text-lg leading-8 text-[#556174] sm:text-xl">Ti aiutiamo a creare i primi prodotti digitali per la tua community: dallo strumento gratuito alla pagina di vendita. Senza dover sviluppare un e-commerce da zero.</p>
+        <div className="mt-9 flex flex-wrap gap-3"><Link href="/creator-studio" className={button}>Scopri l'attivazione Founder →</Link><Link href="#come-funziona" className={outline}>Come funziona ↓</Link></div>
+      </div>
+      <aside className="rounded-3xl border border-[#dce5f3] bg-white p-6 shadow-sm lg:col-span-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-[#2563eb]">Per chi è</p>
+        <p className="mt-4 text-xl font-semibold leading-snug">YouTuber, divulgatori, formatori e creator di nicchia.</p>
+        <p className="mt-3 text-sm leading-6 text-[#64748b]">Hai già persone che seguono i tuoi contenuti? Non devi avere milioni di visualizzazioni per iniziare a testare un prodotto.</p>
+      </aside>
+    </section>
+    <section id="come-funziona" className="bg-[#111827] py-20 text-white">
+      <div className={frame}>
+        <p className="text-xs font-semibold uppercase tracking-widest text-[#93b7ff]">Il percorso</p>
+        <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight sm:text-6xl">Tu hai la competenza. Noi realizziamo la struttura.</h2>
+        <div className="mt-12 grid gap-4 md:grid-cols-3">{steps.map(s=><div key={s.no} className="rounded-2xl border border-white/15 p-7"><p className="text-sm font-bold text-[#93b7ff]">{s.no}</p><h3 className="mt-5 text-2xl font-semibold">{s.title}</h3><p className="mt-3 text-sm leading-7 text-[#bac4d5]">{s.desc}</p></div>)}</div>
+      </div>
+    </section>
+    <section id="prodotti" className={`${frame} py-20 sm:py-28`}>
+      <p className="text-xs font-semibold uppercase tracking-widest text-[#2563eb]">Un prodotto alla volta</p>
+      <h2 className="mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:text-6xl">Dal contenuto gratuito al prodotto completo.</h2>
+      <p className="mt-5 max-w-3xl text-lg leading-8 text-[#556174]">Progettiamo una scala di prodotti, ma cominciamo dal primo passo vendibile. Gli importi qui sotto sono esempi: il prezzo finale dipende dal tuo pubblico e dall'offerta.</p>
+      <div className="mt-11 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{tiers.map(t=><div key={t.label} className="rounded-2xl border border-[#dce5f3] bg-white p-6"><p className="text-xs font-bold uppercase tracking-widest text-[#2563eb]">{t.label}</p><p className="mt-4 text-3xl font-semibold">{t.price}</p><p className="mt-4 text-sm leading-7 text-[#56657a]">{t.text}</p></div>)}</div>
+    </section>
+    <section className="border-y border-[#dce5f3] bg-[#eaf1ff] py-16">
+      <div className={`${frame} flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between`}>
+        <div><p className="text-xs font-semibold uppercase tracking-widest text-[#2563eb]">Programma di lancio</p><h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">Il tuo primo spazio digitale, con noi.</h2><p className="mt-4 max-w-2xl text-[#475569]">Scopri l'attivazione assistita Founder e cosa include la prevendita. Nessun risultato economico promesso.</p></div>
+        <Link href="/creator-studio" className={button}>Dettagli del programma →</Link>
+      </div>
+    </section>
+    <section className={`${frame} grid gap-7 py-20 md:grid-cols-2 md:items-center`}>
+      <div><p className="text-xs font-semibold uppercase tracking-widest text-[#2563eb]">Siamo uno studio di prodotti</p><h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-5xl">RMP Works non è solo Creator Studio.</h2><p className="mt-5 leading-8 text-[#556174]">I nostri prodotti aziendali, incluso Regolario, rimangono disponibili.</p></div>
+      <div className="flex flex-wrap gap-3 md:justify-end"><Link href="/projects/regolario" className={outline}>Scopri Regolario →</Link><Link href="/projects" className={outline}>Tutti i progetti →</Link></div>
+    </section>
+    <footer className="bg-[#111827] py-10 text-sm text-[#c2cad8]"><div className={`${frame} flex flex-col justify-between gap-6 sm:flex-row sm:items-center`}><div><p className="font-bold text-white">RMP WORKS</p><p className="mt-1">© 2026 RMP Works · Creator Studio</p></div><div className="flex flex-wrap gap-5"><Link href="/projects">Progetti</Link><Link href="/about">Chi siamo</Link><Link href="/contact">Contatti</Link><a href={rmpPhone.href}>{rmpPhone.display}</a></div></div></footer>
+  </main>;
 }
