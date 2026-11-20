@@ -7,7 +7,6 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -15,19 +14,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "RMP Works",
+    default: "RMP Works | Strumenti e prodotti digitali per creator",
     template: "%s — RMP Works",
   },
-  description:
-    "RMP Works costruisce prodotti semplici per problemi reali. Regolario aiuta le aziende a rimettere in ordine il lavoro organizzativo che accompagna l'AI.",
+  description: "RMP Works aiuta i piccoli content creator a costruire prodotti digitali, risorse gratuite e percorsi di monetizzazione. Scopri Creator Studio e gli altri progetti.",
   metadataBase: new URL("https://rmpworks.com"),
   other: {
     "contact:telephone": rmpPhone.international,
   },
   openGraph: {
-    title: "RMP Works — Prodotti semplici per problemi reali",
-    description:
-      "Regolario aiuta le aziende a rimettere in ordine formazione, organizzazione e documentazione legate all'uso dell'AI.",
+    title: "RMP Works — Dal tuo canale al tuo primo prodotto digitale",
+    description: "Uno studio per creator indipendenti: dalla prima risorsa gratuita al primo prodotto digitale.",
     type: "website",
     locale: "it_IT",
     siteName: "RMP Works",
@@ -48,12 +45,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       availableLanguage: ["it", "en"],
     },
   };
-
   return (
-    <html
-      lang="it"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="it" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full">
         {children}
         <script

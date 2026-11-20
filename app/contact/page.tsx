@@ -1,79 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { rmpPhone } from "../contact-details";
-
-export const metadata: Metadata = {
-  title: "Contatti | RMP Works",
-  description:
-    "Per informazioni su Regolario, assessment e partnership: il canale pubblico di supporto Regolario.",
-};
-
-const frame = "mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12 xl:px-16";
-
-function BrandMark() {
-  return (
-    <span className="inline-flex h-7 items-end gap-1" aria-hidden>
-      <span className="h-3 w-3 -skew-x-12 bg-[var(--rmp-purple)]" />
-      <span className="h-5 w-3 -skew-x-12 bg-[var(--rmp-green)]" />
-      <span className="h-7 w-3 -skew-x-12 bg-[var(--rmp-orange)]" />
-    </span>
-  );
-}
-
-export default function ContactPage() {
-  return (
-    <main className="min-h-screen overflow-x-clip bg-[var(--background)] text-[var(--foreground)]">
-      <header className="border-b border-[var(--line)]">
-        <div className={`${frame} flex items-center justify-between py-5`}>
-          <Link href="/" className="flex items-center gap-3 text-base font-bold tracking-[-0.03em]">
-            <BrandMark />
-            <span>RMP WORKS</span>
-          </Link>
-          <nav className="flex items-center gap-5 text-sm text-[var(--muted)] sm:gap-8">
-            <Link className="transition hover:text-[var(--rmp-purple)]" href="/projects">Progetti</Link>
-            <Link className="transition hover:text-[var(--rmp-purple)]" href="/about">Chi siamo</Link>
-            <Link className="text-[var(--foreground)]" href="/contact">Contatti</Link>
-          </nav>
-        </div>
-      </header>
-
-      <section className={`${frame} grid min-h-[72vh] content-center py-16 sm:py-24`}>
-        <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--rmp-purple)]">Contatti Regolario</p>
-        <h1 className="mt-6 max-w-5xl text-[clamp(3.5rem,8vw,8rem)] font-semibold leading-[0.88] tracking-[-0.07em]">
-          Parliamone,
-          <br />
-          senza altre <span className="text-[var(--rmp-orange)]">scartoffie.</span>
-        </h1>
-        <div className="mt-12 max-w-2xl border-t border-[var(--line)] pt-7">
-          <p className="text-lg leading-8 text-[var(--muted)]">
-            Per informazioni su Regolario, assessment e possibili partnership, puoi scrivere al canale pubblico di supporto Regolario.
-          </p>
-          <a
-            href="mailto:supporto@regolario.com"
-            className="mt-7 inline-flex w-fit items-center gap-3 rounded-full bg-[#101010] px-6 py-3 text-sm font-semibold !text-white transition hover:bg-[var(--rmp-purple)]"
-          >
-            Scrivi a supporto@regolario.com <span aria-hidden>↗</span>
-          </a>
-          <a
-            href={rmpPhone.href}
-            className="mt-3 inline-flex w-fit items-center gap-3 rounded-full border border-[var(--line)] px-6 py-3 text-sm font-semibold transition hover:border-[var(--rmp-purple)] hover:text-[var(--rmp-purple)]"
-          >
-            Chiama RMP Works: {rmpPhone.display}
-          </a>
-          <p className="mt-6 text-sm leading-6 text-[var(--muted)]">
-            Il supporto email riguarda Regolario. Per RMP Works puoi chiamare il numero aziendale qui sopra.
-          </p>
-        </div>
-      </section>
-      <footer className="bg-[#101010] text-white">
-        <div className={`${frame} flex flex-col gap-5 py-9 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between`}>
-          <div className="flex items-center gap-3"><BrandMark /><span className="font-semibold text-white">RMP WORKS</span></div>
-          <div className="flex flex-wrap gap-x-6 gap-y-3">
-            <a className="transition hover:text-[var(--rmp-purple)]" href={rmpPhone.href}>{rmpPhone.display}</a>
-            <Link className="transition hover:text-[var(--rmp-purple)]" href="/projects/regolario">Scopri Regolario</Link>
-          </div>
-        </div>
-      </footer>
-    </main>
-  );
+export const metadata:Metadata={title:"Contattaci | RMP Creator Studio",description:"Hai un canale YouTube e vuoi creare il tuo primo prodotto digitale? Parliamone con RMP Creator Studio."};
+const frame="mx-auto max-w-[1240px] px-5 md:px-12";
+export default function Contact(){
+ return <main className="flex min-h-screen flex-col bg-[#f7f1e5] text-[#111]">
+  <header className="border-b-[4px] border-black"><div className={frame+" flex min-h-20 flex-wrap items-center justify-between gap-4 py-3"}><Link href="/" className="bg-black px-3 py-2 text-xl font-black tracking-[-.08em] text-white">RMP/WORKS.</Link><Link href="/" className="text-xs font-black uppercase underline decoration-[3px] underline-offset-8">← Torna al sito</Link></div></header>
+  <section className={frame+" grid flex-1 items-center gap-12 py-16 lg:grid-cols-[1.15fr_.85fr]"}>
+   <div><p className="inline-block border-[3px] border-black bg-[#faff4e] px-4 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#111]">Creator Studio / Contatti</p><h1 className="mt-9 text-[clamp(3.8rem,8vw,8rem)] font-black uppercase leading-[.85] tracking-[-.095em]">PARLIAMO<br/>DEL TUO<br/><span className="text-[#f25436]">CANALE.</span></h1><p className="mt-9 max-w-xl text-lg font-bold leading-8">Che cosa chiedono più spesso i tuoi spettatori? Potrebbe essere proprio il punto di partenza del primo prodotto.</p></div>
+   <aside className="border-[4px] border-black bg-[#faff4e] p-7 shadow-[10px_10px_0_#111] sm:p-10"><p className="font-mono text-xs font-black uppercase tracking-[.22em]">Partiamo da una conversazione</p><h2 className="mt-7 text-4xl font-black uppercase leading-none tracking-tight">UN PROGETTO.<br/>UN PRIMO PASSO.</h2><p className="mt-7 text-sm font-semibold leading-7">Raccontaci chi sei, di cosa parli sul canale e quale problema del tuo pubblico vorresti risolvere. Per il momento il contatto è telefonico.</p><a href={rmpPhone.href} className="mt-8 inline-flex w-full justify-center border-[3px] border-black bg-black px-5 py-5 text-center text-sm font-black uppercase text-white">Chiama {rmpPhone.display} ↗</a><p className="mt-5 text-xs font-semibold">Nessun acquisto obbligatorio e nessuna promessa di vendite.</p></aside>
+  </section>
+  <footer className="bg-[#111] py-8 text-white"><div className={frame+" flex flex-wrap justify-between gap-5 text-xs font-bold uppercase"}><span>© 2026 RMP Works</span><Link href="/creator-studio">Scopri il programma Founder</Link></div></footer>
+ </main>;
 }
