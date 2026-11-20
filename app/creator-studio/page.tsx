@@ -45,6 +45,7 @@ export default function Founder(){
     <p className="font-mono text-xs font-black text-[#e93625]">{n} / INCLUSO</p><h3 className="mt-8 text-2xl font-black uppercase tracking-[-.045em]">{title}</h3><p className="mt-4 text-sm leading-7 text-[#4a4642]">{desc}</p>
    </article>)}</div>
   </section>
+  <section className="border-t-2 border-black bg-[#f4f2ed] py-14"><div className={frame+" flex flex-wrap items-center justify-between gap-6"}><div><p className={eyebrow+" text-[#e93625]"}>[ VUOI VEDERE UN ESEMPIO? ]</p><h2 className="mt-4 text-[clamp(2.2rem,4vw,4rem)] font-black uppercase leading-[.9] tracking-[-.06em]">PRIMA DI DECIDERE, PROVA LA DEMO.</h2><p className="mt-4 max-w-2xl text-sm leading-7">Una pagina creator dimostrativa con un quiz realmente interattivo e prodotti puramente illustrativi.</p></div><Link href="/demo" className={textButton}>APRI LA DEMO ↗</Link></div></section>
   <section className="grid border-y-2 border-black lg:grid-cols-2">
    <div className="border-b-2 border-black bg-[#171615] p-7 text-[#f4f2ed] sm:p-12 lg:border-b-0 lg:border-r-2">
     <p className={eyebrow+" text-[#ff513c]"}>[ IL PERCORSO ]</p><h2 className="mt-6 text-[clamp(3rem,5vw,5.4rem)] font-black uppercase leading-[.9] tracking-[-.07em]">PRIMA<br/>PARLIAMO.<br/>POI CREIAMO.</h2>
