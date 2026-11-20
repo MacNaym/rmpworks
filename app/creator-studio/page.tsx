@@ -44,11 +44,11 @@ export default function Founder() {
      </div>
    </section>
    <section className="bg-[#111827] py-16 text-white"><div className={frame}>
-     <h2 className="text-3xl font-semibold sm:text-5xl">Cosa comprende l'attivazione</h2>
+     <h2 className="text-3xl font-semibold sm:text-5xl">Cosa comprende l&apos;attivazione</h2>
      <div className="mt-9 grid gap-4 md:grid-cols-2">{included.map(item=><div key={item} className="rounded-xl border border-white/15 p-5 text-sm leading-7">✓ {item}</div>)}</div>
    </div></section>
    <section className={`${frame} grid gap-10 py-16 md:grid-cols-2`}>
-     <div><h2 className="text-3xl font-semibold">Come si parte</h2><ol className="mt-6 space-y-4 leading-7 text-[#526176]"><li>1. Parliamo del tuo canale e del pubblico.</li><li>2. Concordiamo il primo prodotto e i materiali necessari.</li><li>3. Ricevi per iscritto ambito, condizioni e data di consegna.</li><li>4. Dopo il pagamento e l'onboarding, prepariamo la tua attivazione.</li></ol></div>
+     <div><h2 className="text-3xl font-semibold">Come si parte</h2><ol className="mt-6 space-y-4 leading-7 text-[#526176]"><li>1. Parliamo del tuo canale e del pubblico.</li><li>2. Concordiamo il primo prodotto e i materiali necessari.</li><li>3. Ricevi per iscritto ambito, condizioni e data di consegna.</li><li>4. Dopo il pagamento e l&apos;onboarding, prepariamo la tua attivazione.</li></ol></div>
      <div><h2 className="text-3xl font-semibold">Cosa non comprende</h2><ul className="mt-6 space-y-4 leading-7 text-[#526176]">{excluded.map(item=><li key={item}>— {item}</li>)}</ul></div>
    </section>
    <section className="border-y border-[#dce5f3] bg-white py-16"><div className={frame}><h2 className="text-3xl font-semibold sm:text-5xl">Domande frequenti</h2><div className="mt-9 divide-y divide-[#dce5f3]">{questions.map(q=><div key={q.q} className="py-6"><h3 className="text-lg font-semibold">{q.q}</h3><p className="mt-2 max-w-3xl leading-7 text-[#526176]">{q.a}</p></div>)}</div></div></section>
