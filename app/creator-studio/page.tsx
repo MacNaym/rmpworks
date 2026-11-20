@@ -52,6 +52,6 @@ export default function Founder() {
      <div><h2 className="text-3xl font-semibold">Cosa non comprende</h2><ul className="mt-6 space-y-4 leading-7 text-[#526176]">{excluded.map(item=><li key={item}>— {item}</li>)}</ul></div>
    </section>
    <section className="border-y border-[#dce5f3] bg-white py-16"><div className={frame}><h2 className="text-3xl font-semibold sm:text-5xl">Domande frequenti</h2><div className="mt-9 divide-y divide-[#dce5f3]">{questions.map(q=><div key={q.q} className="py-6"><h3 className="text-lg font-semibold">{q.q}</h3><p className="mt-2 max-w-3xl leading-7 text-[#526176]">{q.a}</p></div>)}</div></div></section>
-   <footer className="bg-[#111827] py-10 text-sm text-white/70"><div className={`${frame} flex flex-wrap justify-between gap-4`}><span>© 2026 RMP Works</span><div className="flex flex-wrap gap-5"><Link href="/projects/regolario">Regolario</Link><Link href="/contact">Contatti</Link><Link href="/about">Chi siamo</Link></div></div></footer>
+   <footer className="bg-[#111827] py-10 text-sm text-white/70"><div className={`${frame} flex flex-wrap justify-between gap-4`}><span>© 2026 RMP Works</span><div className="flex flex-wrap gap-5"><Link href="/design-lab">Design Lab</Link><Link href="/contact">Contatti</Link><Link href="/about">Chi siamo</Link></div></div></footer>
  </main>;
 }
