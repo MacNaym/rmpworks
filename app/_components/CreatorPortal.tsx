@@ -77,7 +77,7 @@ export default function CreatorPortal(){
   }
   if(step===2&&!/^[a-z0-9][a-z0-9-]{2,39}$/.test(profile.slug)){setError("Usa 3-40 lettere minuscole, numeri o trattini per il sottodominio.");return;}
   if(step===2&&profile.inspiration_channels.trim()){
-   const refs=profile.inspiration_channels.split("\\n").map(x=>x.trim()).filter(Boolean);
+   const refs=profile.inspiration_channels.split("\n").map(x=>x.trim()).filter(Boolean);
    if(refs.length<3||refs.length>5){setError("Inserisci da 3 a 5 canali, uno per riga, oppure lascia il campo vuoto.");return;}
   }
   setStep(s=>Math.min(4,s+1));
@@ -136,7 +136,7 @@ export default function CreatorPortal(){
        <p className="font-bold">Quali canali ti piacciono?</p>
        <p className="mt-2 leading-7">Indicaci da 3 a 5 canali YouTube, Twitch o altri creator che trovi belli da vedere. <strong>Non devono appartenere alla tua nicchia.</strong> Possiamo usarli per capire colori, ritmo, tono e atmosfera, senza copiarli.</p>
        <p className="mt-2 text-sm">Scrivi un canale per riga, con nome o link. È facoltativo: se non hai esempi puoi lasciare vuoto.</p>
-       <AreaField id="creator-inspiration-channels" title="3–5 canali di ispirazione (facoltativo)" value={profile.inspiration_channels} onChange={v=>change("inspiration_channels",v)} placeholder={"Es. https://youtube.com/@canale1\\nCanale che adoro per i colori\\nCreator che mi piace per la grafica"} />
+       <AreaField id="creator-inspiration-channels" title="3–5 canali di ispirazione (facoltativo)" value={profile.inspiration_channels} onChange={v=>change("inspiration_channels",v)} placeholder={"Es. https://youtube.com/@canale1\nCanale che adoro per i colori\nCreator che mi piace per la grafica"} />
       </div></>}
      {step===3&&<>
       <div className="border-2 border-black/20 bg-[#f5f3ee] p-5">
