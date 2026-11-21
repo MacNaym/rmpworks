@@ -35,8 +35,7 @@ export async function onRequestPost(ctx:Ctx){
   const premium_product_idea=textField(x.premium_product_idea,1000);
   const style_notes=textField(x.style_notes,1000);
   const inspiration_channels=textField(x.inspiration_channels,2000);
-  const inspirationList=inspiration_channels.split("\
-").map(v=>v.trim()).filter(Boolean);
+  const inspirationList=inspiration_channels.split("\n").map(v=>v.trim()).filter(Boolean);
   if(inspiration_channels&&(inspirationList.length<3||inspirationList.length>5))return respond(400,{error:"Inserisci 3–5 canali di ispirazione, uno per riga, o lascia il campo vuoto."});
   let channel:URL;try{channel=new URL(channel_url)}catch{return respond(400,{error:"Link del canale non valido."})}
   if(display_name.length<2||display_name.length>100||channel.protocol!=="https:"||channel.username||channel.password||channel_url.length>500||!(/^[a-z0-9][a-z0-9-]{2,39}$/.test(slug))||topic.length<3||[audience,lead_magnet_idea,micro_product_idea,premium_product_idea,style_notes].some(x=>x.length>1000))return respond(400,{error:"Verifica nome, canale, sottodominio e descrizioni."});
