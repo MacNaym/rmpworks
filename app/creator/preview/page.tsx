@@ -1,6 +1,7 @@
 "use client";
 import {useEffect,useState} from "react";
 import Link from "next/link";
+import LeadMagnetPreviewForm from "../../_components/LeadMagnetPreviewForm";
 
 type Profile={display_name:string;channel_url:string;slug:string;topic:string;audience:string;lead_magnet_idea:string;micro_product_idea:string;premium_product_idea:string;style_notes:string;inspiration_channels:string;status:string};
 export default function CreatorPreview(){
@@ -23,6 +24,7 @@ export default function CreatorPreview(){
    <article className="border-2 border-black bg-white p-7"><p className="font-bold uppercase text-sm">02 / MICROPRODOTTO</p><h3 className="mt-5 text-2xl font-black">Parti da qui</h3><p className="mt-4 text-base leading-7">{p.micro_product_idea||"Prodotto digitale in preparazione."}</p><p className="mt-7 text-sm font-semibold">Non acquistabile</p></article>
    <article className="border-2 border-black bg-white p-7"><p className="font-bold uppercase text-sm">03 / IN FUTURO</p><h3 className="mt-5 text-2xl font-black">Esperienza completa</h3><p className="mt-4 text-base leading-7">{p.premium_product_idea||"Progetto premium da definire."}</p><p className="mt-7 text-sm font-semibold">Da sviluppare insieme</p></article>
   </div></section>
+  <LeadMagnetPreviewForm creatorName={p.display_name}/>
   <footer className="border-t-2 border-black px-6 py-8 text-center text-sm">Bozza visiva generata dal brief · {p.slug}.rmpworks.com è soltanto il sottodominio richiesto · RMP Works</footer>
  </main>;
 }
