@@ -37,8 +37,16 @@ export async function onRequestPost(ctx:Ctx){
   let channel:URL;try{channel=new URL(channel_url)}catch{return respond(400,{error:"Link del canale non valido."})}
   if(display_name.length<2||display_name.length>100||channel.protocol!=="https:"||channel.username||channel.password||channel_url.length>500||!(/^[a-z0-9][a-z0-9-]{2,39}$/.test(slug))||topic.length<3||[audience,lead_magnet_idea,micro_product_idea,premium_product_idea,style_notes].some(x=>x.length>1000))return respond(400,{error:"Verifica nome, canale, sottodominio e descrizioni."});
   // Status and owner ID are server-generated; clients cannot set activation status.
-  const payload={owner_user_id:u.id,display_name,channel_url,slug,topic,audience,lead_magnet_idea,micro_product_idea,premium_product_idea,style_notes,onboarding_step:5};
-  const r=await fetch(ctx.env.RMP_SUPABASE_URL!+"/rest/v1/creator_accounts?on_conflict=owner_user_id",{method:"POST",headers:{...options(ctx.env,u.accessToken),"prefer":"resolution=merge-duplicates,return=representation"},body:JSON.stringify(payload)});
+  const fields={display_name,channel_url,slug,topic,audience,lead_magnet_idea,micro_product_idea,premium_product_idea,style_notes,onboarding_step:5};
+  // Split INSERT and UPDATE: PostgREST upsert would try to update restricted columns
+  // such as owner_user_id, which creator users are deliberately forbidden to change.
+  const existing=await fetch(ctx.env.RMP_SUPABASE_URL!+"/rest/v1/creator_accounts?select=id&owner_user_id=eq."+encodeURIComponent(u.id)+"&limit=1",{headers:options(ctx.env,u.accessToken)});
+  if(!existing.ok)return respond(503,{error:"Impossibile verificare il profilo."},u.headers);
+  const rowsBefore=await existing.json() as {id:string}[];
+  const isUpdate=rowsBefore.length>0;
+  const payload=isUpdate?fields:{...fields,owner_user_id:u.id};
+  const endpoint=ctx.env.RMP_SUPABASE_URL!+"/rest/v1/creator_accounts"+(isUpdate?"?owner_user_id=eq."+encodeURIComponent(u.id):"");
+  const r=await fetch(endpoint,{method:isUpdate?"PATCH":"POST",headers:{...options(ctx.env,u.accessToken),"prefer":"return=representation"},body:JSON.stringify(payload)});
   if(!r.ok){const message=await r.text();return respond(r.status===409?409:400,{error:message.includes("creator_accounts_slug_key")?"Questo sottodominio è già occupato. Scegline un altro.":"Non è stato possibile salvare il profilo. Controlla i dati e riprova."},u.headers)}
   const rows=await r.json() as object[];
   return respond(200,{ok:true,account:rows[0]||null},u.headers);
