@@ -4,10 +4,10 @@ import Link from "next/link";
 
 type Profile={
  id?:string;display_name:string;channel_url:string;slug:string;topic:string;audience:string;
- lead_magnet_idea:string;micro_product_idea:string;premium_product_idea:string;style_notes:string;
+ lead_magnet_idea:string;micro_product_idea:string;premium_product_idea:string;style_notes:string;inspiration_channels:string;
  onboarding_step?:number;status?:string;
 };
-const empty:Profile={display_name:"",channel_url:"",slug:"",topic:"",audience:"",lead_magnet_idea:"",micro_product_idea:"",premium_product_idea:"",style_notes:""};
+const empty:Profile={display_name:"",channel_url:"",slug:"",topic:"",audience:"",lead_magnet_idea:"",micro_product_idea:"",premium_product_idea:"",style_notes:"",inspiration_channels:""};
 type AuthState="loading"|"unavailable"|"logged_out"|"email_sent"|"authenticated";
 type Step={tag:string;title:string;subtitle:string};
 const steps:Step[]=[
@@ -76,6 +76,10 @@ export default function CreatorPortal(){
    if(profile.topic.trim().length<3){setError("Indica l'argomento del canale.");return;}
   }
   if(step===2&&!/^[a-z0-9][a-z0-9-]{2,39}$/.test(profile.slug)){setError("Usa 3-40 lettere minuscole, numeri o trattini per il sottodominio.");return;}
+  if(step===2&&profile.inspiration_channels.trim()){
+   const refs=profile.inspiration_channels.split("\n").map(x=>x.trim()).filter(Boolean);
+   if(refs.length<3||refs.length>5){setError("Inserisci da 3 a 5 canali, uno per riga, oppure lascia il campo vuoto.");return;}
+  }
   setStep(s=>Math.min(4,s+1));
  };
  async function save(event:FormEvent){
@@ -104,7 +108,7 @@ export default function CreatorPortal(){
    <p className="font-mono text-[10px] font-black uppercase text-[#e93625]">[ DASHBOARD / BRIEF SALVATO ]</p>
    <h2 className="mt-5 text-[clamp(2.2rem,5vw,5rem)] font-black uppercase leading-[.88] tracking-[-.07em]">{profile.display_name}</h2>
    <p className="mt-6 max-w-2xl text-sm leading-7">La scheda del tuo progetto è registrata. Il sito pubblico, il CRM e i prodotti non sono ancora attivati: il brief sarà esaminato prima dell'avvio dei lavori.</p>
-   <div className="mt-10 grid gap-4 sm:grid-cols-3">{[["STATO",profile.status||"onboarding"],["SPAZIO DESIDERATO",profile.slug+".rmpworks.com"],["PRIMO PRODOTTO",profile.micro_product_idea||"Da definire"]].map(([k,v])=><div className="border-2 border-black p-5" key={k}><p className="font-mono text-[10px] font-black uppercase text-[#e93625]">{k}</p><p className="mt-4 break-words text-sm font-semibold">{v}</p></div>)}</div>
+   <div className="mt-5"><a className="inline-block border-2 border-black bg-[#e93625] px-6 py-4 font-bold text-black" href="/creator/preview">VEDI ANTEPRIMA DEL TUO SPAZIO ↗</a><p className="mt-2 text-sm">Anteprima privata: non è ancora il sottodominio pubblico.</p></div><div className="mt-10 grid gap-4 sm:grid-cols-3">{[["STATO",profile.status||"onboarding"],["SPAZIO DESIDERATO",profile.slug+".rmpworks.com"],["PRIMO PRODOTTO",profile.micro_product_idea||"Da definire"]].map(([k,v])=><div className="border-2 border-black p-5" key={k}><p className="font-mono text-[10px] font-black uppercase text-[#e93625]">{k}</p><p className="mt-4 break-words text-sm font-semibold">{v}</p></div>)}</div>
    <button className="mt-8 border-2 border-black bg-black px-6 py-4 font-mono text-xs font-black uppercase text-white" onClick={()=>{setSaved(false);setStep(0)}}>MODIFICA IL BRIEF ↗</button>
   </section>:
   <section className="grid lg:grid-cols-[.38fr_.62fr]">
@@ -127,7 +131,13 @@ export default function CreatorPortal(){
        <button type="button" className="mt-4 border-2 border-black bg-white px-4 py-3 font-semibold underline underline-offset-4" onClick={()=>{if(!profile.style_notes.trim())change("style_notes","Non ho riferimenti visivi precisi. Preferisco uno stile moderno, leggibile e adatto al mio pubblico. Vorrei ricevere 2-3 proposte tra cui scegliere, evitando testi piccoli e pagine affollate.");}}>Non lo so: proponetemi voi uno stile</button>
        <p className="mt-3 text-sm">Il suggerimento non sostituisce le tue risposte se hai già scritto qualcosa.</p>
       </div>
-      <AreaField id="creator-style" title="Stile e riferimenti visivi (facoltativo)" value={profile.style_notes} onChange={v=>change("style_notes",v)} placeholder="Es. colori blu e nero, atmosfera amichevole, niente animazioni..." /></>}
+      <AreaField id="creator-style" title="Stile e riferimenti visivi (facoltativo)" value={profile.style_notes} onChange={v=>change("style_notes",v)} placeholder="Es. colori blu e nero, atmosfera amichevole, niente animazioni..." />
+      <div className="border-2 border-black/20 p-5">
+       <p className="font-bold">Quali canali ti piacciono?</p>
+       <p className="mt-2 leading-7">Indicaci da 3 a 5 canali YouTube, Twitch o altri creator che trovi belli da vedere. <strong>Non devono appartenere alla tua nicchia.</strong> Possiamo usarli per capire colori, ritmo, tono e atmosfera, senza copiarli.</p>
+       <p className="mt-2 text-sm">Scrivi un canale per riga, con nome o link. È facoltativo: se non hai esempi puoi lasciare vuoto.</p>
+       <AreaField id="creator-inspiration-channels" title="3–5 canali di ispirazione (facoltativo)" value={profile.inspiration_channels} onChange={v=>change("inspiration_channels",v)} placeholder={"Es. https://youtube.com/@canale1\nCanale che adoro per i colori\nCreator che mi piace per la grafica"} />
+      </div></>}
      {step===3&&<>
       <div className="border-2 border-black/20 bg-[#f5f3ee] p-5">
        <p className="font-bold">Non devi inventarti i prodotti da solo.</p>

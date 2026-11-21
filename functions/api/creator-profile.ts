@@ -1,5 +1,5 @@
 import {type Ctx,configured,originOk,respond,options,getCreator,isTestBuyer} from "../_lib/creator-auth";
-type Payload={display_name?:unknown;channel_url?:unknown;slug?:unknown;topic?:unknown;audience?:unknown;lead_magnet_idea?:unknown;micro_product_idea?:unknown;premium_product_idea?:unknown;style_notes?:unknown};
+type Payload={display_name?:unknown;channel_url?:unknown;slug?:unknown;topic?:unknown;audience?:unknown;lead_magnet_idea?:unknown;micro_product_idea?:unknown;premium_product_idea?:unknown;style_notes?:unknown;inspiration_channels?:unknown};
 const textField=(x:unknown,max=1000)=>typeof x==="string"?x.trim().slice(0,max+1):"";
 async function authorize({request,env}:Ctx){
  if(!configured(env))return {error:respond(503,{error:"Area creator non ancora attiva."})};
@@ -12,7 +12,7 @@ export async function onRequestGet(ctx:Ctx){
  try{
   const gate=await authorize(ctx);if(gate.error)return gate.error;
   const u=gate.user!;
-  const r=await fetch(ctx.env.RMP_SUPABASE_URL!+"/rest/v1/creator_accounts?select=id,display_name,channel_url,slug,status,onboarding_step,topic,audience,lead_magnet_idea,micro_product_idea,premium_product_idea,style_notes&owner_user_id=eq."+encodeURIComponent(u.id)+"&limit=1",{headers:options(ctx.env,u.accessToken)});
+  const r=await fetch(ctx.env.RMP_SUPABASE_URL!+"/rest/v1/creator_accounts?select=id,display_name,channel_url,slug,status,onboarding_step,topic,audience,lead_magnet_idea,micro_product_idea,premium_product_idea,style_notes,inspiration_channels&owner_user_id=eq."+encodeURIComponent(u.id)+"&limit=1",{headers:options(ctx.env,u.accessToken)});
   if(!r.ok)return respond(503,{error:"Dati creator non disponibili."},u.headers);
   const rows=await r.json() as object[];
   return respond(200,{account:rows[0]||null},u.headers);
@@ -34,10 +34,13 @@ export async function onRequestPost(ctx:Ctx){
   const micro_product_idea=textField(x.micro_product_idea,1000);
   const premium_product_idea=textField(x.premium_product_idea,1000);
   const style_notes=textField(x.style_notes,1000);
+  const inspiration_channels=textField(x.inspiration_channels,2000);
+  const inspirationList=inspiration_channels.split("\n").map(v=>v.trim()).filter(Boolean);
+  if(inspiration_channels&&(inspirationList.length<3||inspirationList.length>5))return respond(400,{error:"Inserisci 3–5 canali di ispirazione, uno per riga, o lascia il campo vuoto."});
   let channel:URL;try{channel=new URL(channel_url)}catch{return respond(400,{error:"Link del canale non valido."})}
   if(display_name.length<2||display_name.length>100||channel.protocol!=="https:"||channel.username||channel.password||channel_url.length>500||!(/^[a-z0-9][a-z0-9-]{2,39}$/.test(slug))||topic.length<3||[audience,lead_magnet_idea,micro_product_idea,premium_product_idea,style_notes].some(x=>x.length>1000))return respond(400,{error:"Verifica nome, canale, sottodominio e descrizioni."});
   // Status and owner ID are server-generated; clients cannot set activation status.
-  const fields={display_name,channel_url,slug,topic,audience,lead_magnet_idea,micro_product_idea,premium_product_idea,style_notes,onboarding_step:5};
+  const fields={display_name,channel_url,slug,topic,audience,lead_magnet_idea,micro_product_idea,premium_product_idea,style_notes,inspiration_channels,onboarding_step:5};
   // Split INSERT and UPDATE: PostgREST upsert would try to update restricted columns
   // such as owner_user_id, which creator users are deliberately forbidden to change.
   const existing=await fetch(ctx.env.RMP_SUPABASE_URL!+"/rest/v1/creator_accounts?select=id&owner_user_id=eq."+encodeURIComponent(u.id)+"&limit=1",{headers:options(ctx.env,u.accessToken)});
