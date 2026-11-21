@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { rmpPhone } from "./contact-details";
+import { shopShieldStoreId } from "./shopshield-config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,8 +46,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       availableLanguage: ["it", "en"],
     },
   };
+  const shopShieldId = shopShieldStoreId(process.env.RMP_SHOPSHIELD_STORE_ID);
   return (
     <html lang="it" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <head>
+        {shopShieldId ? (
+          <script
+            src="https://cdn.shopshield.io/shield-uni.js"
+            data-store-id={shopShieldId}
+            data-network-gating="1"
+          />
+        ) : null}
+      </head>
       <body className="min-h-full">
         {children}
         <script
