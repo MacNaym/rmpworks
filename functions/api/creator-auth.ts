@@ -22,7 +22,12 @@ export async function onRequestPost({request,env}:Ctx){
   if(!emailOk(email))return respond(400,{error:"Inserisci una email valida."});
   if(!await isTestBuyer(env,email))return respond(403,{error:"Non risulta un ordine Founder test pagato associato a questa email."});
   if(data.action==="request"){
-   const r=await fetch(env.RMP_SUPABASE_URL!+"/auth/v1/otp",{method:"POST",headers:options(env),body:JSON.stringify({email,create_user:true})});
+   // Always request the canonical Creator Desk return URL. Supabase must separately
+   // allowlist it under Authentication > URL Configuration. Never use localhost.
+   const redirectTo="https://rmpworks.com/creator";
+   const otpUrl=new URL(env.RMP_SUPABASE_URL!+"/auth/v1/otp");
+   otpUrl.searchParams.set("redirect_to",redirectTo);
+   const r=await fetch(otpUrl.toString(),{method:"POST",headers:options(env),body:JSON.stringify({email,create_user:true})});
    if(!r.ok)return respond(r.status===429?429:503,{error:r.status===429?"Troppe richieste. Riprova più tardi.":"Invio codice non riuscito. Controlla la configurazione email."});
    return respond(200,{ok:true});
   }
