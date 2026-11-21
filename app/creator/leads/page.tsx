@@ -25,6 +25,16 @@ export default function CreatorLeads(){
   try{const r=await fetch("/api/creator-leads",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({full_name:fullName,email,consent})});const j=await r.json() as Api;if(!r.ok)throw Error(j.error||"Contatto non salvato.");setFullName("");setEmail("");setConsent(false);setNotice("Contatto di prova registrato.");await load();}
   catch(e){setError(e instanceof Error?e.message:"Errore imprevisto.");}finally{setSaving(false)}
  }
+ async function removeTestLead(id:string){
+  if(!window.confirm("Vuoi eliminare definitivamente questo contatto di prova dal CRM? Non potrai recuperarlo."))return;
+  setEditing(id);setError("");setNotice("");
+  try{
+   const r=await fetch("/api/creator-leads",{method:"DELETE",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({id})});
+   const j=await r.json() as Api;
+   if(!r.ok)throw Error(j.error||"Eliminazione non riuscita.");
+   setLeads(prev=>prev.filter(l=>l.id!==id));setNotice("Contatto di prova eliminato definitivamente.");
+  }catch(e){setError(e instanceof Error?e.message:"Errore imprevisto.");}finally{setEditing("")}
+ }
  async function update(id:string,status:string){setEditing(id);setError("");setNotice("");
   try{const r=await fetch("/api/creator-leads",{method:"PATCH",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({id,status})});const j=await r.json() as Api;if(!r.ok)throw Error(j.error||"Aggiornamento non riuscito.");setLeads(prev=>prev.map(l=>l.id===id?{...l,status}:l));}
   catch(e){setError(e instanceof Error?e.message:"Errore imprevisto.");}finally{setEditing("")}
@@ -53,6 +63,7 @@ export default function CreatorLeads(){
      <p className="break-words text-lg font-bold">{l.full_name||l.email}</p>{l.full_name&&<p className="mt-1 break-words">{l.email}</p>}
      <p className="mt-2 text-sm text-[#555]">Origine: {l.source==="preview_test"?"Test privato":l.source} · {new Date(l.created_at).toLocaleDateString("it-IT")}</p>
      <label className="mt-3 block font-semibold">Stato<select className={field+" mt-2"} value={l.status} disabled={editing===l.id} onChange={e=>void update(l.id,e.target.value)}>{steps.map(([v,t])=><option value={v} key={v}>{t}</option>)}</select></label>
+     {l.source==="preview_test"&&<button type="button" className="mt-3 text-sm font-semibold text-[#a52217] underline disabled:opacity-40" disabled={editing===l.id} onClick={()=>void removeTestLead(l.id)}>Elimina contatto di prova</button>}
     </li>)}</ul>}
   </section>
  </div>

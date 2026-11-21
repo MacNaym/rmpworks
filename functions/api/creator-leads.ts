@@ -58,3 +58,21 @@ export async function onRequestPatch(ctx:Ctx){
   return respond(200,{ok:true,lead:rows[0]},u.headers);
  }catch(e){if(e instanceof SyntaxError)return respond(400,{error:"Dati non validi."});console.error("CRM PATCH",e instanceof Error?e.message:"unknown");return respond(503,{error:"Errore temporaneo."})}
 }
+
+export async function onRequestDelete(ctx:Ctx){
+ try{
+  if(!originOk(ctx.request))return respond(403,{error:"Origine non autorizzata."});
+  const gate=await authorize(ctx);if(gate.error)return gate.error;
+  const u=gate.user!,account=gate.account!;
+  const raw=await ctx.request.text();if(raw.length>500)return respond(413,{error:"Richiesta troppo grande."});
+  const input=JSON.parse(raw) as {id?:unknown};
+  const id=typeof input.id==="string"?input.id:"";
+  if(!/^[0-9a-f]{8}-[0-9a-f-]{4}-[0-9a-f-]{4}-[0-9a-f-]{4}-[0-9a-f]{12}$/i.test(id))return respond(400,{error:"ID contatto non valido."});
+  const url=endpoint(ctx)+"?id=eq."+encodeURIComponent(id)+"&creator_account_id=eq."+encodeURIComponent(account.id)+"&source=eq.preview_test";
+  const r=await fetch(url,{method:"DELETE",headers:{...options(ctx.env,u.accessToken),prefer:"return=representation"}});
+  if(!r.ok)return respond(503,{error:"Impossibile cancellare il contatto di prova."},u.headers);
+  const rows=await r.json() as {id:string}[];
+  if(!rows.length)return respond(404,{error:"Contatto di prova non trovato."},u.headers);
+  return respond(200,{ok:true,deleted:rows[0].id},u.headers);
+ }catch(e){if(e instanceof SyntaxError)return respond(400,{error:"Dati non validi."});console.error("CRM DELETE",e instanceof Error?e.message:"unknown");return respond(503,{error:"Errore temporaneo."})}
+}
