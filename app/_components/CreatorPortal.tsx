@@ -120,8 +120,39 @@ export default function CreatorPortal(){
     <div className="mt-9 space-y-6">
      {step===0&&<InputField id="creator-display" title="Nome creator / brand" value={profile.display_name} onChange={v=>change("display_name",v)} placeholder="Come ti conosce il pubblico?"/>}
      {step===1&&<><InputField id="creator-channel" title="Link del canale" value={profile.channel_url} onChange={v=>change("channel_url",v)} placeholder="https://youtube.com/@..."/><InputField id="creator-topic" title="Argomento principale" value={profile.topic} onChange={v=>change("topic",v)}/><AreaField id="creator-audience" title="A chi ti rivolgi?" value={profile.audience} onChange={v=>change("audience",v)}/></>}
-     {step===2&&<><InputField id="creator-slug" title="Sottodominio desiderato" value={profile.slug} onChange={v=>change("slug",v.toLowerCase().replace(/[^a-z0-9-]/g,""))} placeholder="nomecreator"/><p className="font-mono text-xs">ANTEPRIMA: {profile.slug||"nomecreator"}.rmpworks.com</p><AreaField id="creator-style" title="Stile e riferimenti visivi" value={profile.style_notes} onChange={v=>change("style_notes",v)}/></>}
-     {step===3&&<><AreaField id="creator-lead" title="Risorsa gratuita / quiz" value={profile.lead_magnet_idea} onChange={v=>change("lead_magnet_idea",v)}/><AreaField id="creator-micro" title="Primo microprodotto" value={profile.micro_product_idea} onChange={v=>change("micro_product_idea",v)}/><AreaField id="creator-premium" title="Prodotto premium futuro" value={profile.premium_product_idea} onChange={v=>change("premium_product_idea",v)}/></>}
+     {step===2&&<><InputField id="creator-slug" title="Sottodominio desiderato" value={profile.slug} onChange={v=>change("slug",v.toLowerCase().replace(/[^a-z0-9-]/g,""))} placeholder="nomecreator"/><p className="font-mono text-xs">ANTEPRIMA: {profile.slug||"nomecreator"}.rmpworks.com</p>
+      <div className="border-2 border-black/20 bg-[#f5f3ee] p-5" aria-label="Mini guida allo stile grafico">
+       <p className="font-bold">Non sei un designer? Nessun problema.</p>
+       <p className="mt-2 leading-7">Puoi raccontarci in parole semplici: che atmosfera vuoi (divertente, professionale, energica), quali colori preferisci, un sito che ti piace e cosa vuoi evitare. Non serve conoscere termini tecnici.</p>
+       <button type="button" className="mt-4 border-2 border-black bg-white px-4 py-3 font-semibold underline underline-offset-4" onClick={()=>{if(!profile.style_notes.trim())change("style_notes","Non ho riferimenti visivi precisi. Preferisco uno stile moderno, leggibile e adatto al mio pubblico. Vorrei ricevere 2-3 proposte tra cui scegliere, evitando testi piccoli e pagine affollate.");}}>Non lo so: proponetemi voi uno stile</button>
+       <p className="mt-3 text-sm">Il suggerimento non sostituisce le tue risposte se hai già scritto qualcosa.</p>
+      </div>
+      <AreaField id="creator-style" title="Stile e riferimenti visivi (facoltativo)" value={profile.style_notes} onChange={v=>change("style_notes",v)} placeholder="Es. colori blu e nero, atmosfera amichevole, niente animazioni..." /></>}
+     {step===3&&<>
+      <div className="border-2 border-black/20 bg-[#f5f3ee] p-5">
+       <p className="font-bold">Non devi inventarti i prodotti da solo.</p>
+       <p className="mt-2 leading-7">Un regalo gratuito raccoglie contatti; un prodotto economico offre un primo acquisto semplice; un premium è un progetto più importante da valutare insieme. Ecco tre modi per partire:</p>
+       <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        <button type="button" className="border-2 border-black bg-white p-3 text-left font-semibold" onClick={()=>{
+         setProfile(p=>({...p,lead_magnet_idea:p.lead_magnet_idea||"Vorrei un quiz, una checklist o una mini guida gratuita utile al mio pubblico.",micro_product_idea:p.micro_product_idea||"Vorrei un piccolo prodotto digitale (5-19 euro), per esempio una guida pratica, un template o una raccolta di risorse.",premium_product_idea:p.premium_product_idea||"In futuro valuterei un corso completo o un kit avanzato da realizzare insieme a RMP Works."}));}}>
+         Mostrami esempi di prodotti
+        </button>
+        <button type="button" className="border-2 border-black bg-white p-3 text-left font-semibold" onClick={()=>{
+         setProfile(p=>({...p,lead_magnet_idea:p.lead_magnet_idea||"Non ho idee precise: vorrei discuterne con RMP Works per scegliere una risorsa gratuita adatta al mio pubblico.",micro_product_idea:p.micro_product_idea||"Vorrei discutere con RMP Works alcune proposte di microprodotti prima di sceglierne uno.",premium_product_idea:p.premium_product_idea||"Vorrei valutare insieme a RMP Works se un prodotto premium ha senso per la mia community."}));}}>
+         Preferisco parlarne con RMP Works
+        </button>
+        <button type="button" className="border-2 border-black bg-white p-3 text-left font-semibold sm:col-span-2" onClick={()=>{
+         setProfile(p=>({...p,lead_magnet_idea:p.lead_magnet_idea||"Chiedo a RMP Works di analizzare il mio canale e suggerire 2-3 lead magnet coerenti.",micro_product_idea:p.micro_product_idea||"Chiedo a RMP Works una ricerca sul pubblico e sulle opportunità di microprodotti digitali, con proposte e motivazioni da approvare.",premium_product_idea:p.premium_product_idea||"Vorrei ricevere proposte di prodotti premium basate sulle esigenze del pubblico, da valutare e approvare prima di svilupparle."}));}}>
+         Fate una ricerca e proponetemi voi le idee
+        </button>
+       </div>
+       <p className="mt-4 leading-7">I suggerimenti sono un punto di partenza: possiamo discuterne insieme. Nessun prodotto viene creato, promesso o pubblicato automaticamente senza la tua approvazione.</p>
+       <p className="mt-2 text-sm">I pulsanti compilano soltanto i campi vuoti: non cancellano ciò che hai già scritto. Puoi modificare tutto.</p>
+      </div>
+      <AreaField id="creator-lead" title="Risorsa gratuita / quiz" value={profile.lead_magnet_idea} onChange={v=>change("lead_magnet_idea",v)} placeholder="Es. checklist, mini guida o quiz per il mio pubblico" />
+      <AreaField id="creator-micro" title="Primo microprodotto" value={profile.micro_product_idea} onChange={v=>change("micro_product_idea",v)} placeholder="Es. PDF pratico, template o risorse digitali" />
+      <AreaField id="creator-premium" title="Prodotto premium futuro" value={profile.premium_product_idea} onChange={v=>change("premium_product_idea",v)} placeholder="Es. guida completa, corso o pacchetto avanzato" />
+     </>}
      {step===4&&<form onSubmit={save} className="space-y-4 text-sm"><div className="border-2 border-black p-5"><p><strong>Creator:</strong> {profile.display_name}</p><p className="mt-2"><strong>Canale:</strong> {profile.channel_url}</p><p className="mt-2"><strong>Sottodominio desiderato:</strong> {profile.slug}.rmpworks.com</p><p className="mt-2"><strong>Primo prodotto:</strong> {profile.micro_product_idea||"Da definire"}</p></div><p className="text-xs leading-6">Il salvataggio invia il brief alla tua area privata; non pubblica automaticamente il sottodominio e non costituisce un ordine.</p><button disabled={busy} className="w-full border-2 border-black bg-[#e93625] p-4 font-mono text-xs font-black uppercase text-black disabled:opacity-50">{busy?"SALVATAGGIO…":"SALVA IL BRIEF ↗"}</button></form>}
     </div>
     {error&&<p role="alert" className="mt-6 border-l-4 border-[#e93625] pl-4 text-sm">{error}</p>}
