@@ -8,7 +8,7 @@
 - La lista `pro_plus` contiene funzioni pianificate; nessuna suite analytics è stata effettivamente implementata o resa disponibile.
 - Questo modello non implementa quote, relazioni tenant, RLS, scadenze, verifica webhook o anti-abuso. Perciò NON va usato come autorizzazione di endpoint senza completare B9A (enforcement lato DB) e B9B (billing).
 - La prova gratuita Pro di 7 giorni sarà validata lato backend; `trialing` è qui solo un esempio di stato sottoscrizione, non una logica completa di trial.
-- Prezzi di riferimento: Pro 16,90 € + IVA/mese, Pro Plus target 25 € + IVA/mese; standalone 5–10 € + IVA/mese. Nessuna creazione Stripe.
+- Prezzi aggiornati: **Pro lancio 5 € + IVA/mese o 50 € + IVA/anno**; **Pro standard 16,90 € + IVA/mese o 169 € + IVA/anno**; **Pro Plus target 29 € + IVA/mese**, soggetto a costi; standalone 5–10 € + IVA/mese per singolo strumento. Trial **7 giorni solo Pro**. Nessuna creazione Stripe.
 - Restano vincolanti issue #28 (no live), #39 (prezzi e conflitti) e #42 (roadmap).
 
 ## Test
