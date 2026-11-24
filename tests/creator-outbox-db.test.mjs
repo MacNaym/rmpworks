@@ -11,7 +11,7 @@ const lead={creatorId,magnetId,email:" Reader@Example.com ",fullName:"Reader",cr
  marketingOptIn:false,privacyVersion:"v1",deliveryConsentText:"Accetto la consegna della risorsa richiesta."};
 const encryption={key,keyId:"mail-v1",providerSupportsIdempotency:false};
 const claimData={outbox_id:uid,event_id:"a".repeat(64),ciphertext:"Abc_DEF012",
- iv:"abcdefghijklmnop",key_id:"mail-v1",envelope_version:1,
+ iv:"abcdefghijklmnop",key_id:"mail-v1",envelope_version:1,provider_idempotent:false,
  lease_token:lease,attempts:1,expires_at:"2026-11-24T10:15:00Z"};
 test("authorization false means no RPC call or token generation",async()=>{
  let called=0;

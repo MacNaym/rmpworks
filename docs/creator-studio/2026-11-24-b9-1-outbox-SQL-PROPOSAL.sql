@@ -116,7 +116,7 @@ GRANT EXECUTE ON FUNCTION public.creator_create_lead_with_outbox(
 CREATE FUNCTION public.creator_claim_confirmation_mail()
 RETURNS TABLE(
  outbox_id uuid,event_id text,ciphertext text,iv text,key_id text,
- envelope_version integer,lease_token uuid,attempts integer,expires_at timestamptz
+ envelope_version integer,provider_idempotent boolean,lease_token uuid,attempts integer,expires_at timestamptz
 )
 LANGUAGE plpgsql SECURITY DEFINER SET search_path=''
 AS $fn$
@@ -178,7 +178,7 @@ BEGIN
  FROM claimable q
  WHERE o.id=q.id
  RETURNING o.id,o.event_id,o.ciphertext,o.iv,o.key_id,
-           o.envelope_version,o.lease_token,o.attempts,o.expires_at;
+           o.envelope_version,o.provider_idempotent,o.lease_token,o.attempts,o.expires_at;
 END;
 $fn$;
 REVOKE ALL ON FUNCTION public.creator_claim_confirmation_mail()

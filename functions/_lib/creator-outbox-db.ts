@@ -33,6 +33,7 @@ export type OutboxClaim={
   iv:string;
   keyId:string;
   envelopeVersion:1;
+  providerIdempotent:boolean;
   leaseToken:string;
   attempts:number;
   expiresAt:string;
@@ -128,6 +129,7 @@ export async function claimOneConfirmationMail(
      typeof v.iv!=="string"||!v.iv||
      typeof v.key_id!=="string"||!v.key_id||
      v.envelope_version!==1||
+     typeof v.provider_idempotent!=="boolean"||
      typeof v.lease_token!=="string"||!uid.test(v.lease_token)||
      typeof v.attempts!=="number"||!Number.isInteger(v.attempts)||
      v.attempts<1||v.attempts>4||
@@ -136,7 +138,8 @@ export async function claimOneConfirmationMail(
   }
   return {status:"claimed",job:{
    outboxId:v.outbox_id,eventId:v.event_id,ciphertext:v.ciphertext,
-   iv:v.iv,keyId:v.key_id,envelopeVersion:1,leaseToken:v.lease_token,
+   iv:v.iv,keyId:v.key_id,envelopeVersion:1,
+   providerIdempotent:v.provider_idempotent,leaseToken:v.lease_token,
    attempts:v.attempts,expiresAt:v.expires_at,
   }};
  }catch{return {status:"unavailable"};}
@@ -157,4 +160,26 @@ export async function acknowledgeConfirmationMail(
   },fetcher);
   return r===true?"acknowledged":r===false?"stale":"unavailable";
  }catch{return "unavailable";}
+}
+
+
+/**
+ * Trusted DB freshness check to call after decrypt and before dispatch.
+ * Validates the current lease, token TTL, creator publication and magnet
+ * against the database clock; no eligibility is decided from browser flags.
+ * This read is not a guarantee against changes after the RPC returns.
+ */
+export async function revalidateConfirmationMailLease(
+ env:OutboxDbEnv,job:{outboxId:string;leaseToken:string},
+ fetcher:typeof fetch=fetch
+):Promise<boolean>{
+ if(!envOk(env)||!job||typeof job.outboxId!=="string"||
+    typeof job.leaseToken!=="string"||
+    !uid.test(job.outboxId)||!uid.test(job.leaseToken))return false;
+ try{
+  const response=await rpc(env,"creator_can_dispatch_confirmation_mail",{
+   p_outbox_id:job.outboxId,p_lease_token:job.leaseToken,
+  },fetcher);
+  return response===true;
+ }catch{return false;}
 }
