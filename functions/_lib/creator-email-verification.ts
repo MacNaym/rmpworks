@@ -64,7 +64,7 @@ export async function redeemEmailVerification(
 export function verificationLink(origin: string, token: string): string {
   const url = new URL(origin);
   if (url.protocol !== "https:" || url.username || url.password || url.pathname !== "/" ||
-      url.search || url.hash || !tokenPattern.test(token) ||
+      url.search || url.hash || url.port || !tokenPattern.test(token) ||
       !["rmpworks.com", "www.rmpworks.com"].includes(url.hostname)) {
     throw new Error("Unapproved email verification origin/token");
   }
