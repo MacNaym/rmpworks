@@ -33,6 +33,7 @@ export type OutboxClaim={
   iv:string;
   keyId:string;
   envelopeVersion:1;
+  providerIdempotent:boolean;
   leaseToken:string;
   attempts:number;
   expiresAt:string;
@@ -128,6 +129,7 @@ export async function claimOneConfirmationMail(
      typeof v.iv!=="string"||!v.iv||
      typeof v.key_id!=="string"||!v.key_id||
      v.envelope_version!==1||
+     typeof v.provider_idempotent!=="boolean"||
      typeof v.lease_token!=="string"||!uid.test(v.lease_token)||
      typeof v.attempts!=="number"||!Number.isInteger(v.attempts)||
      v.attempts<1||v.attempts>4||
@@ -136,7 +138,8 @@ export async function claimOneConfirmationMail(
   }
   return {status:"claimed",job:{
    outboxId:v.outbox_id,eventId:v.event_id,ciphertext:v.ciphertext,
-   iv:v.iv,keyId:v.key_id,envelopeVersion:1,leaseToken:v.lease_token,
+   iv:v.iv,keyId:v.key_id,envelopeVersion:1,
+   providerIdempotent:v.provider_idempotent,leaseToken:v.lease_token,
    attempts:v.attempts,expiresAt:v.expires_at,
   }};
  }catch{return {status:"unavailable"};}
