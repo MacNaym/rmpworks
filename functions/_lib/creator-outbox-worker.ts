@@ -33,7 +33,7 @@ export type WorkerConfig = {
 };
 export type WorkerResult =
   "disabled"|"empty"|"unavailable"|"deferred"|"sent"|
-  "retry_scheduled"|"dead"|"needs_review"|"ack_unavailable";
+  "recorded"|"dead"|"ack_unavailable";
 
 const eventIdPattern=/^[a-f0-9]{64}$/;
 const validResult=(v:unknown):v is DispatchResult=>
@@ -76,8 +76,9 @@ export async function dispatchOneConfirmation(
       if(result!=="acknowledged")return "ack_unavailable";
       if(outcome==="accepted")return "sent";
       if(outcome==="permanent")return "dead";
-      if(outcome==="ambiguous")return "needs_review";
-      return "retry_scheduled";
+      // DB policy may mark dead/retry/review based on expiry and provider
+      // idempotency. The boolean ACK does not reveal that final state.
+      return "recorded";
     }catch{return "ack_unavailable";}
   };
 
