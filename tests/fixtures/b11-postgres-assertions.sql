@@ -21,7 +21,7 @@ BEGIN
    '22222222-2222-4222-8222-222222222222',
    'lead@example.com','Smoke',false,'v1',
    'I consent to delivery of the requested resource',
-   repeat('a',64),repeat('A',32),repeat('B',16),'key-v1',true
+   repeat('a',64),repeat('c',64),repeat('A',32),repeat('B',16),'key-v1',true
  ) INTO v_ok;
  IF NOT v_ok THEN RAISE EXCEPTION 'Atomic insert failed'; END IF;
  IF (SELECT count(*) FROM public.creator_public_lead_inbox)<>1 OR
@@ -33,7 +33,7 @@ BEGIN
    '22222222-2222-4222-8222-222222222222',
    'lead@example.com','Smoke',false,'v1',
    'I consent to delivery of the requested resource',
-   repeat('b',64),repeat('A',32),repeat('B',16),'key-v1',true
+   repeat('b',64),repeat('d',64),repeat('A',32),repeat('B',16),'key-v1',true
  ) INTO v_ok;
  IF v_ok OR (SELECT count(*) FROM public.creator_confirmation_outbox)<>1 THEN
    RAISE EXCEPTION 'Duplicate lead not rejected';
