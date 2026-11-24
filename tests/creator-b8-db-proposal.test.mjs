@@ -42,3 +42,13 @@ test("migration does not modify existing creator tables or grant anonymous write
  assert.doesNotMatch(sql,/GRANT (?:INSERT|UPDATE|DELETE|ALL).*\bTO\s+(?:anon|authenticated)\b/i);
  assert.doesNotMatch(sql,/\bDROP TABLE\b/i);
 });
+
+test("token issuance is backend-only and prevents replacing live challenges",()=>{
+ assert.match(sql,/CREATE FUNCTION public\.creator_issue_email_token\(p_lead_id uuid,p_digest text\)/);
+ assert.match(sql,/li\.status='pending_verification'/);
+ assert.match(sql,/li\.verified_at IS NULL/);
+ assert.match(sql,/li\.verification_token_digest IS NULL OR li\.verification_expires_at<=now\(\)/);
+ assert.match(sql,/verification_expires_at=now\(\) \+ interval '15 minutes'/);
+ assert.match(sql,/REVOKE ALL ON FUNCTION public\.creator_issue_email_token\(uuid,text\)\s+FROM PUBLIC, anon, authenticated/);
+ assert.match(sql,/GRANT EXECUTE ON FUNCTION public\.creator_issue_email_token\(uuid,text\) TO service_role/);
+});
