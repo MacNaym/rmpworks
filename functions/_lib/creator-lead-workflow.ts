@@ -20,7 +20,6 @@ export type LeadWorkflowSettings={
   fetcher?:typeof fetch;
 };
 export type LeadIntakeResult="disabled"|"stored"|"closed"|"unavailable";
-const uid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const hex=/^[a-f0-9]{64}$/;
 const endpoint=(url:string)=>/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(url);
 const validDB=(db:OutboxDbEnv)=>
@@ -75,9 +74,9 @@ export async function confirmPendingCreatorLead(
      body:JSON.stringify({p_digest:tokenDigest}),
      signal:AbortSignal.timeout(5000)
     });
-   if(!response.ok)return "unavailable" as never;
+   if(!response.ok)throw Error("Confirmation RPC unavailable");
    const data=await response.json();
    return data===true?"consumed":"invalid";
-  }catch{return "unavailable" as never;}
+  }catch{throw Error("Confirmation RPC unavailable");}
  });
 }
