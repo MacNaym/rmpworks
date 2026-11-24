@@ -15,7 +15,7 @@ Run offline with Node 22+:
 node --experimental-strip-types --test tests/creator-turnstile.test.mjs tests/creator-rate-limit.test.mjs tests/public-lead-pipeline.test.mjs tests/public-lead-inbox.test.mjs tests/creator-b6-integration.test.mjs
 ```
 
-Expected number of cases: 5 + 6 + 6 + 5 + 6 = 28. **Tests are written, not yet executed on the Captain's PC or against actual D1/Supabase.** A passed mocked integration test does NOT prove real SQL transaction isolation or that exposed endpoints are safe.
+Expected number of cases: 5 + 6 + 6 + 5 + 7 = 29. **Tests are written, not yet executed on the Captain's PC or against actual D1/Supabase.** A passed mocked integration test does NOT prove real SQL transaction isolation or that exposed endpoints are safe.
 
 ## Release blockers
 1. No Cloudflare Pages public POST route exists. None should be created during this pass.
@@ -29,3 +29,6 @@ Expected number of cases: 5 + 6 + 6 + 5 + 6 = 28. **Tests are written, not yet e
 
 ## Proposed merge sequence
 After successful local tests and security review, merge the smaller PRs (#45, #46, #47, #48) in dependency order. **Do not merge this validation branch** afterwards if that would duplicate files; keep it as a test harness branch or selectively port `tests/creator-b6-integration.test.mjs` to main. No auto-merge.
+
+## Review note — HTTP 409 hardening
+PostgREST uses HTTP 409 for both uniqueness (23505) and foreign-key failures (23503). PR #48 now names the triple uniqueness constraint and only recognizes the named 23505 duplicate; every other 409 fails closed. The integration harness exercises a 23503 response. This is a code review/test preparation step; neither mocks nor static regex tests prove that the SQL works on actual staging.
