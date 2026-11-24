@@ -93,6 +93,10 @@ export async function dispatchOneConfirmation(
   if(!Number.isFinite(time)||time>=epoch(job.expiresAt))
     return ack("permanent");
 
+  // Never rely on client assertions for provider retry safety.
+  if(job.providerIdempotent===true && config.transport.supportsIdempotency!==true)
+    return ack("permanent");
+
   const key=config.keys[job.keyId];
   if(!(key instanceof Uint8Array)||key.byteLength!==32)return ack("permanent");
 
