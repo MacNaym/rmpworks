@@ -1,0 +1,6 @@
+# B9.8 isolated manual Cloudflare remote-dev probe — NOT a deployment config for RMP Works Pages.
+name = "rmpworks-smtp-diagnostic-ephemeral"
+main = "smtp-probe-worker.ts"
+compatibility_date = "2026-11-24"
+workers_dev = false
+preview_urls = false
