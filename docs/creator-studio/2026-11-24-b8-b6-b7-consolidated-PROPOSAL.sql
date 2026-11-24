@@ -16,7 +16,7 @@ BEGIN
  END IF;
  IF to_regprocedure('public.creator_consume_email_token(text)') IS NOT NULL OR
     to_regprocedure('public.creator_issue_email_token(uuid,text)') IS NOT NULL THEN
-   RAISE EXCEPTION 'Email token RPC already exists: manual review required';
+   RAISE EXCEPTION 'Token RPC already exists: manual review required';
  END IF;
  IF to_regclass('public.creator_accounts') IS NULL OR
     to_regclass('public.creator_lead_magnets') IS NULL OR
@@ -95,10 +95,8 @@ CREATE TRIGGER check_creator_public_lead_inbox
  BEFORE INSERT ON public.creator_public_lead_inbox
  FOR EACH ROW EXECUTE FUNCTION public.validate_creator_public_lead_inbox();
 
--- Atomic digest issuance after successful pending inbox write.
--- Only server-side service_role may issue a challenge. The raw token
--- is never stored: the server generates it and submits SHA-256 digest.
--- Reissue is blocked while the prior challenge is still valid.
+-- Backend-only digest issuance for a pre-existing pending lead.
+-- Prefer the one-shot creator_create_pending_lead_with_token RPC below for new leads.
 CREATE FUNCTION public.creator_issue_email_token(p_lead_id uuid,p_digest text)
 RETURNS boolean
 LANGUAGE plpgsql
@@ -108,55 +106,7 @@ AS $fn$
 DECLARE updated_rows integer;
 BEGIN
  IF p_lead_id IS NULL OR
-    p_digest IS NULL OR p_digest !~ '^[a-f0-9]{64}
--- SECURITY DEFINER intentionally bypasses RLS and is executable ONLY by
--- service_role. Fully schema-qualified references and empty search_path.
-CREATE FUNCTION public.creator_consume_email_token(p_digest text)
-RETURNS boolean
-LANGUAGE plpgsql
-SECURITY DEFINER
-SET search_path=''
-AS $fn$
-DECLARE updated_rows integer;
-BEGIN
- IF p_digest IS NULL OR p_digest !~ '^[a-f0-9]{64}$' THEN
-   RETURN false;
- END IF;
- UPDATE public.creator_public_lead_inbox li
- SET status='verified',
-     verified_at=now(),
-     verification_token_digest=NULL,
-     verification_expires_at=NULL,
-     updated_at=now()
- WHERE li.verification_token_digest=p_digest
-   AND li.verification_expires_at>now()
-   AND li.status='pending_verification'
-   AND EXISTS (
-      SELECT 1 FROM public.creator_accounts a
-      JOIN public.creator_site_snapshots s ON s.creator_account_id=a.id
-      JOIN public.creator_lead_magnets m ON m.creator_account_id=a.id
-      WHERE a.id=li.creator_account_id
-        AND a.status='active'
-        AND s.published IS TRUE AND s.published_at IS NOT NULL
-        AND m.id=li.magnet_id AND m.status='approved'
-   );
- GET DIAGNOSTICS updated_rows=ROW_COUNT;
- RETURN updated_rows=1;
-END;
-$fn$;
-REVOKE ALL ON FUNCTION public.creator_consume_email_token(text)
- FROM PUBLIC, anon, authenticated;
-GRANT EXECUTE ON FUNCTION public.creator_consume_email_token(text) TO service_role;
-
-CREATE INDEX creator_public_lead_inbox_status_idx
- ON public.creator_public_lead_inbox(status,created_at);
-CREATE INDEX creator_public_lead_inbox_creator_idx
- ON public.creator_public_lead_inbox(creator_account_id,created_at DESC);
-
-COMMIT;
--- Migration rollback MUST be separately authorized: restoring this schema
--- after leads exist is NOT lossless. See companion rollback runbook.
- THEN
+    p_digest IS NULL OR p_digest !~ '^[a-f0-9]{64}$' THEN
    RETURN false;
  END IF;
  UPDATE public.creator_public_lead_inbox li
