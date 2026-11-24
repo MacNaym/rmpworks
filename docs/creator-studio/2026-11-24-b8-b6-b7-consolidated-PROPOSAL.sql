@@ -15,7 +15,8 @@ BEGIN
    RAISE EXCEPTION 'B6+B7 fresh install expects inbox absent; review schema diff instead';
  END IF;
  IF to_regprocedure('public.creator_consume_email_token(text)') IS NOT NULL OR
-    to_regprocedure('public.creator_issue_email_token(uuid,text)') IS NOT NULL THEN
+    to_regprocedure('public.creator_issue_email_token(uuid,text)') IS NOT NULL OR
+    to_regprocedure('public.creator_create_pending_lead_with_token(uuid,uuid,text,text,boolean,text,text,text)') IS NOT NULL THEN
    RAISE EXCEPTION 'Email token RPC already exists: manual review required';
  END IF;
  IF to_regclass('public.creator_accounts') IS NULL OR
@@ -183,6 +184,171 @@ $fn$;
 REVOKE ALL ON FUNCTION public.creator_issue_email_token(uuid,text)
  FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.creator_issue_email_token(uuid,text) TO service_role;
+
+-- Preferred new-lead flow: INSERT + token issuance in ONE transaction.
+-- Called ONLY by the trusted backend after release/privacy/rate/Turnstile checks.
+-- Returns boolean only: NEVER expose email existence or row ID to visitors.
+-- Trigger independently checks active creator, published site, approved
+-- same-tenant magnet. No raw token is passed/stored: only SHA-256 digest.
+CREATE FUNCTION public.creator_create_pending_lead_with_token(
+ p_creator_id uuid,
+ p_magnet_id uuid,
+ p_email text,
+ p_full_name text,
+ p_marketing_opt_in boolean,
+ p_privacy_version text,
+ p_delivery_consent_text text,
+ p_digest text
+)
+RETURNS boolean
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path=''
+AS $fn$
+DECLARE v_lead_id uuid;
+DECLARE v_updated integer;
+BEGIN
+ IF p_creator_id IS NULL OR p_magnet_id IS NULL OR
+    p_email IS NULL OR p_email<>lower(btrim(p_email)) OR
+    char_length(p_email) NOT BETWEEN 3 AND 254 OR
+    p_email !~ '^[^[:space:]@]+@[^[:space:]@]+\\.[^[:space:]@]+
+-- SECURITY DEFINER intentionally bypasses RLS and is executable ONLY by
+-- service_role. Fully schema-qualified references and empty search_path.
+CREATE FUNCTION public.creator_consume_email_token(p_digest text)
+RETURNS boolean
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path=''
+AS $fn$
+DECLARE updated_rows integer;
+BEGIN
+ IF p_digest IS NULL OR p_digest !~ '^[a-f0-9]{64}$' THEN
+   RETURN false;
+ END IF;
+ UPDATE public.creator_public_lead_inbox li
+ SET status='verified',
+     verified_at=now(),
+     verification_token_digest=NULL,
+     verification_expires_at=NULL,
+     updated_at=now()
+ WHERE li.verification_token_digest=p_digest
+   AND li.verification_expires_at>now()
+   AND li.status='pending_verification'
+   AND EXISTS (
+      SELECT 1 FROM public.creator_accounts a
+      JOIN public.creator_site_snapshots s ON s.creator_account_id=a.id
+      JOIN public.creator_lead_magnets m ON m.creator_account_id=a.id
+      WHERE a.id=li.creator_account_id
+        AND a.status='active'
+        AND s.published IS TRUE AND s.published_at IS NOT NULL
+        AND m.id=li.magnet_id AND m.status='approved'
+   );
+ GET DIAGNOSTICS updated_rows=ROW_COUNT;
+ RETURN updated_rows=1;
+END;
+$fn$;
+REVOKE ALL ON FUNCTION public.creator_consume_email_token(text)
+ FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.creator_consume_email_token(text) TO service_role;
+
+CREATE INDEX creator_public_lead_inbox_status_idx
+ ON public.creator_public_lead_inbox(status,created_at);
+CREATE INDEX creator_public_lead_inbox_creator_idx
+ ON public.creator_public_lead_inbox(creator_account_id,created_at DESC);
+
+COMMIT;
+-- Migration rollback MUST be separately authorized: restoring this schema
+-- after leads exist is NOT lossless. See companion rollback runbook.
+ OR
+    p_full_name IS NULL OR char_length(p_full_name) > 120 OR
+    p_marketing_opt_in IS NULL OR
+    p_privacy_version IS NULL OR char_length(p_privacy_version) NOT BETWEEN 1 AND 64 OR
+    p_delivery_consent_text IS NULL OR char_length(p_delivery_consent_text) NOT BETWEEN 10 AND 500 OR
+    p_digest IS NULL OR p_digest !~ '^[a-f0-9]{64}
+-- SECURITY DEFINER intentionally bypasses RLS and is executable ONLY by
+-- service_role. Fully schema-qualified references and empty search_path.
+CREATE FUNCTION public.creator_consume_email_token(p_digest text)
+RETURNS boolean
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path=''
+AS $fn$
+DECLARE updated_rows integer;
+BEGIN
+ IF p_digest IS NULL OR p_digest !~ '^[a-f0-9]{64}$' THEN
+   RETURN false;
+ END IF;
+ UPDATE public.creator_public_lead_inbox li
+ SET status='verified',
+     verified_at=now(),
+     verification_token_digest=NULL,
+     verification_expires_at=NULL,
+     updated_at=now()
+ WHERE li.verification_token_digest=p_digest
+   AND li.verification_expires_at>now()
+   AND li.status='pending_verification'
+   AND EXISTS (
+      SELECT 1 FROM public.creator_accounts a
+      JOIN public.creator_site_snapshots s ON s.creator_account_id=a.id
+      JOIN public.creator_lead_magnets m ON m.creator_account_id=a.id
+      WHERE a.id=li.creator_account_id
+        AND a.status='active'
+        AND s.published IS TRUE AND s.published_at IS NOT NULL
+        AND m.id=li.magnet_id AND m.status='approved'
+   );
+ GET DIAGNOSTICS updated_rows=ROW_COUNT;
+ RETURN updated_rows=1;
+END;
+$fn$;
+REVOKE ALL ON FUNCTION public.creator_consume_email_token(text)
+ FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.creator_consume_email_token(text) TO service_role;
+
+CREATE INDEX creator_public_lead_inbox_status_idx
+ ON public.creator_public_lead_inbox(status,created_at);
+CREATE INDEX creator_public_lead_inbox_creator_idx
+ ON public.creator_public_lead_inbox(creator_account_id,created_at DESC);
+
+COMMIT;
+-- Migration rollback MUST be separately authorized: restoring this schema
+-- after leads exist is NOT lossless. See companion rollback runbook.
+ THEN
+   RETURN false;
+ END IF;
+
+ INSERT INTO public.creator_public_lead_inbox(
+   creator_account_id,magnet_id,email,full_name,marketing_opt_in,
+   privacy_version,delivery_consent_text,status
+ ) VALUES (
+   p_creator_id,p_magnet_id,p_email,btrim(p_full_name),p_marketing_opt_in,
+   p_privacy_version,p_delivery_consent_text,'pending_verification'
+ )
+ ON CONFLICT ON CONSTRAINT creator_public_lead_inbox_unique_lead DO NOTHING
+ RETURNING id INTO v_lead_id;
+ IF v_lead_id IS NULL THEN
+   RETURN false;
+ END IF;
+
+ UPDATE public.creator_public_lead_inbox
+ SET verification_token_digest=p_digest,
+     verification_expires_at=now()+interval '15 minutes',
+     updated_at=now()
+ WHERE id=v_lead_id AND status='pending_verification'
+   AND verification_token_digest IS NULL;
+ GET DIAGNOSTICS v_updated=ROW_COUNT;
+ IF v_updated<>1 THEN
+   RAISE EXCEPTION 'Atomic lead challenge creation failed'
+     USING ERRCODE='23514';
+ END IF;
+ RETURN true;
+END;
+$fn$;
+REVOKE ALL ON FUNCTION public.creator_create_pending_lead_with_token(
+ uuid,uuid,text,text,boolean,text,text,text
+) FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.creator_create_pending_lead_with_token(
+ uuid,uuid,text,text,boolean,text,text,text
+) TO service_role;
 
 -- Single-use redemption; must never be invoked from a GET route.
 -- SECURITY DEFINER intentionally bypasses RLS and is executable ONLY by
