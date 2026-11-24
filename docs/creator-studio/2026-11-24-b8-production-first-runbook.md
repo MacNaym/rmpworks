@@ -49,3 +49,19 @@ The script contains a named unique constraint so the existing B6 server writer c
 - Supabase CLI v3+ `supabase db dump --remote` exports default schema only; `--data-only` and `--role-only` are separately required. Managed Supabase auth/storage schemas are excluded from CLI dump. Three files alone are not a complete disaster-recovery archive unless restore dependencies are independently reviewed. Verify CLI command syntax with `supabase db dump --help` on the actual installed version.
 - Store backups **outside** the repository and all web/public folders. Never commit dumps containing personal data, credentials, access tokens or user records. Check the archive is nonempty and readable before proceeding; ideally practice restoring to an isolated local PostgreSQL instance with compatible version.
 - **Gate state: BLOCKED** until recoverability is verified. No production SQL executed.
+
+## Incremental progress while Supabase Multi backup capability is being implemented
+Captain is adding the manual backup/recovery capability to Supabase Multi. We can continue **non-writing** development while that is unfinished; the application of SQL to the live RMP Works database remains explicitly blocked until a **completed, checked and recoverable backup** is recorded. A feature being worked on is not a backup.
+
+The consolidated proposal now includes `public.creator_issue_email_token(uuid,text)` as a backend-only, atomic operation:
+- Receives only an existing pending inbox row ID and SHA-256 token digest, not the raw token.
+- Sets expiry at database time plus 15 minutes.
+- Refuses any challenge reissue while a still-valid challenge exists, and refuses already-verified rows.
+- Requires account `active`, currently published site and approved resource of the same creator.
+- Revokes RPC execution for `PUBLIC`, `anon`, `authenticated`; grants only `service_role`.
+
+The separate dormant client `functions/_lib/creator-token-issuer.ts` requires a trusted server-side `intakeAuthorized` flag and does not send mail. Five issuer mock tests were added; **not yet run via Node on the checked-out project**.
+
+**Still missing before an end-to-end flow:** the existing B6 inbox writer returns an acceptance outcome but not the newly created inbox row ID. The eventual trusted server orchestration must obtain the ID through a scoped backend-only response and must not leak it to the visitor, or replace the write+issue flow with a carefully reviewed atomic DB method. Do not enable confirmation emails before that design and transactional handling are tested. No real message has been sent.
+
+Eight offline SQL structural checks were executed via isolated JavaScript harness and passed; this does **not** prove PostgreSQL parsing, trigger behavior, permissions or a live test.
