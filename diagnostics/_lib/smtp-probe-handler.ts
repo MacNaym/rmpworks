@@ -48,7 +48,7 @@ export async function handleProbeRequest(
  if(result.status==="unavailable" && result.phase==="connect"){
   // Diagnostic-only, never used on public creator endpoints.
   // Secondary TCP attempt is limited to Hostinger:587 with no SMTP commands.
-  const fallback=await diagnoseHostingerEgress(connector);
+  const fallback=await diagnoseHostingerEgress(connector as unknown as Parameters<typeof diagnoseHostingerEgress>[0]);
   return json({...result,egress:fallback},503);
  }
  return json(result,result.status==="connected"?200:503);
