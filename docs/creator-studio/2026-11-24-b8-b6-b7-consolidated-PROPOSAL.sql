@@ -52,6 +52,7 @@ CREATE TABLE public.creator_public_lead_inbox (
 );
 ALTER TABLE public.creator_public_lead_inbox ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON TABLE public.creator_public_lead_inbox FROM PUBLIC, anon, authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.creator_public_lead_inbox TO service_role;
 -- No anonymous/authenticated RLS policies exist; only server-controlled
 -- service_role can access through PostgREST. No browser keys.
 
