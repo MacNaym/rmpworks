@@ -55,7 +55,10 @@ test("approved probe emits EHLO and QUIT and returns sanitized result",async()=>
 });
 test("failed handshake never exposes remote errors or credentials",async()=>{
  const socket=smtpSocket();
+ // Attach a rejection handler synchronously: this fake socket is created
+ // before the handler reaches connect(), unlike a real socket's opened promise.
  socket.opened=Promise.reject(Error("provider secret internals"));
+ void socket.opened.catch(()=>{});
  const res=await handleProbeRequest(request("POST",{"x-rmp-probe-key":key}),env,()=>socket);
  assert.equal(res.status,503);
  const text=await res.text();
