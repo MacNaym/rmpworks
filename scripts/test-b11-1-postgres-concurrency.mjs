@@ -55,7 +55,7 @@ try{
   "ROLLBACK;\n";
  locker.stdin.end(lockSQL);
  const t=Date.now();
- while(!locked&&!lockerExited&&Date.now()-t<5000)pause(50);
+ while(!locked&&!lockerExited&&Date.now()-t<5000)await new Promise(resolve=>setTimeout(resolve,50));
  if(!locked)throw Error("Could not establish held row lock: "+stderr.slice(0,200));
  // The next transaction must SKIP the locked first job and claim the other.
  const second=sql("SELECT event_id FROM public.creator_claim_confirmation_mail();\n").trim();
@@ -64,7 +64,7 @@ try{
  console.log("PASS: concurrent dispatcher skipped first row held by independent transaction");
  // Wait until transaction releases first job, then claim it.
  const started=Date.now();
- while(!lockerExited&&Date.now()-started<11000)pause(100);
+ while(!lockerExited&&Date.now()-started<11000)await new Promise(resolve=>setTimeout(resolve,100));
  if(!lockerExited)throw Error("Locker did not exit");
  const first=sql("SELECT event_id FROM public.creator_claim_confirmation_mail();\n").trim();
  if(first!=="1".repeat(64))throw Error("First job was not available after lock release");
