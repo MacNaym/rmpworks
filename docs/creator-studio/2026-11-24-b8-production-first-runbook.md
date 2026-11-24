@@ -7,7 +7,7 @@ Supabase Multi resolution: `rmpworks` / `mxgwdnnpkywzhldyyrue` / `okstyleshirts`
 Live read-only inspection on 24 Nov confirmed:
 - Six existing `creator_*` tables with RLS enabled.
 - `creator_public_lead_inbox` absent; `creator_consume_email_token(text)` absent.
-- PostgreSQL server version 17.0.12.
+- PostgreSQL server version **17.12** (live `current_setting('server_version')`).
 - Account status constraint permits `active` and `paused`; magnet status permits `approved`.
 - Owner-scoped lead magnet policies; anonymous snapshot SELECT only when `published=true` and timestamp present.
 - All current live creator tables and policies remain untouched by proposed B8 install.
@@ -40,3 +40,12 @@ IMPORTANT: This is **not** a verified migration yet. The generated SQL has not b
 
 ## Testing
 The script contains a named unique constraint so the existing B6 server writer can classify only that PostgREST `23505` conflict as a duplicate, not a FK error. Security implementation tests are proposed as separate checks under `tests/creator-b8-db-proposal.test.mjs`. Static tests are not equivalent to real SQL execution.
+
+## Follow-up inventory — 24 Nov 2026
+- Live counts (read-only): **1 creator account, 1 lead magnet, 0 published site snapshots, 0 active creator accounts**. No functional positive lead-intake test is possible with current creator state without provisioning *explicitly approved* synthetic identities and snapshots; never change the existing pilot creator's real status to force a test.
+- PostgreSQL `anon` and `authenticated` roles cannot bypass RLS; `service_role` has `BYPASSRLS`. This is why all permission checks and restricted RPC grants are important.
+- Admin project metadata / backup inventory through the separate Supabase connector returned **PERMISSION DENIED**. Supabase Multi offers read-only SQL and does not expose backup metadata. **Recoverable backup status is UNKNOWN**, not verified.
+- Official Supabase docs (updated Nov 2026): Free plan does **not** include available automatic daily backups; Pro or higher includes them. If this project is on Free, prepare a manual logical export before any production change. The actual account plan has **not** been confirmed.
+- Supabase CLI v3+ `supabase db dump --remote` exports default schema only; `--data-only` and `--role-only` are separately required. Managed Supabase auth/storage schemas are excluded from CLI dump. Three files alone are not a complete disaster-recovery archive unless restore dependencies are independently reviewed. Verify CLI command syntax with `supabase db dump --help` on the actual installed version.
+- Store backups **outside** the repository and all web/public folders. Never commit dumps containing personal data, credentials, access tokens or user records. Check the archive is nonempty and readable before proceeding; ideally practice restoring to an isolated local PostgreSQL instance with compatible version.
+- **Gate state: BLOCKED** until recoverability is verified. No production SQL executed.
