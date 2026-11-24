@@ -3,8 +3,8 @@
  * No HTTP route imports this module and no provider is configured.
  * All operations require trusted authorization and a backend-only key.
  */
-import {issueEmailVerification,verificationLink} from "./creator-email-verification";
-import {sealOutboxMail} from "./creator-mail-outbox";
+import {issueEmailVerification,verificationLink} from "./creator-email-verification.ts";
+import {sealOutboxMail} from "./creator-mail-outbox.ts";
 
 export type OutboxDbEnv={
   supabaseUrl?:string;
