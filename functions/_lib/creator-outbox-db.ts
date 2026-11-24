@@ -161,3 +161,25 @@ export async function acknowledgeConfirmationMail(
   return r===true?"acknowledged":r===false?"stale":"unavailable";
  }catch{return "unavailable";}
 }
+
+
+/**
+ * Trusted DB freshness check to call after decrypt and before dispatch.
+ * Validates the current lease, token TTL, creator publication and magnet
+ * against the database clock; no eligibility is decided from browser flags.
+ * This read is not a guarantee against changes after the RPC returns.
+ */
+export async function revalidateConfirmationMailLease(
+ env:OutboxDbEnv,job:{outboxId:string;leaseToken:string},
+ fetcher:typeof fetch=fetch
+):Promise<boolean>{
+ if(!envOk(env)||!job||typeof job.outboxId!=="string"||
+    typeof job.leaseToken!=="string"||
+    !uid.test(job.outboxId)||!uid.test(job.leaseToken))return false;
+ try{
+  const response=await rpc(env,"creator_can_dispatch_confirmation_mail",{
+   p_outbox_id:job.outboxId,p_lease_token:job.leaseToken,
+  },fetcher);
+  return response===true;
+ }catch{return false;}
+}
