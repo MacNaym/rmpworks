@@ -74,7 +74,16 @@ async function main(){
     phase:String(payload.phase||"unknown"),
     tlsOpened:payload.tlsOpened===true,
     greetingAccepted:payload.greetingAccepted===true,
-    ehloAccepted:payload.ehloAccepted===true
+    ehloAccepted:payload.ehloAccepted===true,
+    ...(payload.egress&&typeof payload.egress==="object"?{
+      egress:{
+        port465:payload.egress.port465==="tls_failed"?"tls_failed":"unknown",
+        port587:payload.egress.port587==="tcp_opened"?"tcp_opened":"tcp_failed",
+        ...(typeof payload.egress.reason587==="string"?{
+          reason587:["timeout","refused","blocked","tls","dns","unreachable","unknown"].includes(payload.egress.reason587)?payload.egress.reason587:"unknown"
+        }:{})
+      }
+    }:{})
   };
   process.stdout.write("B9.8 SMTP TLS/EHLO diagnostic: "+JSON.stringify(result)+"\n");
   if(result.status!=="connected")process.exitCode=2;
