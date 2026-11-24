@@ -59,8 +59,14 @@ test("successful write is pending only, scoped to tenant and magnet",async()=>{
  });
  assert.equal(r,"accepted");assert.equal(called,true);
 });
-test("duplicate requests and storage failures do not grant success",async()=>{
- assert.equal(await stagePublicCreatorLead(env,lead,async()=>new Response(null,{status:409})),"duplicate");
+test("only named unique constraint counts as a duplicate; foreign key and storage failures reject",async()=>{
+ const unique=()=>Response.json({
+  code:"23505",message:'duplicate key value violates unique constraint "creator_public_lead_inbox_unique_lead"'
+ },{status:409});
+ const fk=()=>Response.json({code:"23503",message:"foreign key violation"},{status:409});
+ assert.equal(await stagePublicCreatorLead(env,lead,async()=>unique()),"duplicate");
+ assert.equal(await stagePublicCreatorLead(env,lead,async()=>fk()),"unavailable");
+ assert.equal(await stagePublicCreatorLead(env,lead,async()=>new Response(null,{status:409})),"unavailable");
  assert.equal(await stagePublicCreatorLead(env,lead,async()=>new Response(null,{status:403})),"unavailable");
  assert.equal(await stagePublicCreatorLead(env,lead,async()=>{throw Error("network")}),"unavailable");
 });
