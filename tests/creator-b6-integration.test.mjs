@@ -12,7 +12,7 @@ const context={releaseEnabled:true,creatorPublished:true,creatorApproved:true,pr
 const input={email:"USER@example.com",fullName:"User",consentToDelivery:true,marketingOptIn:false,honeypot:"",turnstileToken:"valid-token"};
 const secret="testing-secret-that-exceeds-32-chars-for-HMAC";
 
-function harness({turnstile=true,inboxStatus=201,denyAt=3}={}){
+function harness({turnstile=true,inboxStatus=201,inboxErrorCode=null,denyAt=3}={}){
  const events=[];let hits=0;
  const db={prepare(sql){
   assert.match(sql,/ON CONFLICT/);
@@ -26,6 +26,7 @@ function harness({turnstile=true,inboxStatus=201,denyAt=3}={}){
   assert.equal(body.magnet_id,magnetId);
   assert.equal(body.status,"pending_verification");
   assert.equal(body.marketing_opt_in,false);
+  if(inboxErrorCode)return Response.json({code:inboxErrorCode,message:"foreign key violation"},{status:409});
   return new Response(null,{status:inboxStatus});
  };
  const checks={
@@ -78,4 +79,10 @@ test("inbox migration preserves RLS and no public table access",()=>{
  assert.match(sql,/BEFORE INSERT ON public\.creator_public_lead_inbox/i);
  assert.match(sql,/m\.creator_account_id = s\.creator_account_id/i);
  assert.match(sql,/m\.status = 'approved'/i);
+});
+
+test("integrated: foreign-key HTTP 409 is not misclassified as duplicate lead",async()=>{
+ const h=harness({inboxErrorCode:"23503"});
+ assert.deepEqual(await evaluatePublicLead(context,input,h.checks),{ok:false,status:503});
+ assert.deepEqual(h.events,["rate","turnstile","write"]);
 });
