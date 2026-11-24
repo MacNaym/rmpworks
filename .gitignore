@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# B10.1 local one-off send marker (no secrets)
+/scripts/.resend-b10-smoke-attempted
