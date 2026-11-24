@@ -37,8 +37,8 @@ test("associated context and encryption key cannot be substituted",async()=>{
 });
 test("tampering with ciphertext or iv fails authentication",async()=>{
  const envelope=await sealOutboxMail(payload,context);
- await assert.rejects(openOutboxMail({...envelope,ciphertext:"A"+envelope.ciphertext.slice(1)},context));
- await assert.rejects(openOutboxMail({...envelope,iv:"A"+envelope.iv.slice(1)},context));
+ await assert.rejects(openOutboxMail({...envelope,ciphertext:(envelope.ciphertext[0]==="A"?"B":"A")+envelope.ciphertext.slice(1)},context));
+ await assert.rejects(openOutboxMail({...envelope,iv:(envelope.iv[0]==="A"?"B":"A")+envelope.iv.slice(1)},context));
 });
 test("sealing rejects invalid AES key, unknown host and token format",async()=>{
  await assert.rejects(sealOutboxMail(payload,{...context,key:new Uint8Array(16)}));
