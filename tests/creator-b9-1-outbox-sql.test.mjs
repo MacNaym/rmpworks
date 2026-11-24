@@ -62,3 +62,14 @@ test("all new privileged functions revoke PUBLIC roles",()=>{
   assert.match(part,/TO service_role/);
  }
 });
+
+test("SQL has one table, exactly three functions and no trailing duplicated payload",()=>{
+ assert.equal((sql.match(/^CREATE TABLE public\.creator_confirmation_outbox/gm)||[]).length,1);
+ assert.equal((sql.match(/^CREATE FUNCTION public\./gm)||[]).length,3);
+ assert.equal((sql.match(/^AS \$fn\$$/gm)||[]).length,3);
+ assert.equal((sql.match(/^\$fn\$;$/gm)||[]).length,3);
+ assert.equal((sql.match(/^ALTER TABLE public\.creator_confirmation_outbox/gm)||[]).length,1);
+ assert.match(sql,/ciphertext ~ '\^\[A-Za-z0-9_-\]\+\$'/);
+ assert.match(sql,/iv ~ '\^\[A-Za-z0-9_-\]\{16\}\$'/);
+ assert.ok(sql.trimEnd().endsWith("TO service_role;"));
+});
