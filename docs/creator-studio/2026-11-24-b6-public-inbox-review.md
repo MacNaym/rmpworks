@@ -36,3 +36,6 @@ Read-only inspection performed against resolved Supabase Multi target `rmpworks`
 node --experimental-strip-types --test tests/public-lead-inbox.test.mjs
 ```
 Five offline tests are **prepared, not yet executed on user's PC**.
+
+## Deduplication hardening
+The SQL names the composite uniqueness constraint `creator_public_lead_inbox_unique_lead`. PostgREST maps both PostgreSQL `23505` (unique violation) and `23503` (foreign-key violation) to HTTP 409. The writer returns `duplicate` only for a `23505` response mentioning that exact constraint; any other 409 fails closed as `unavailable`. A future public route must normalize duplicate responses to a generic acknowledgement to avoid subscriber enumeration, without disclosing database details. This check is mocked and still needs actual staging validation.
