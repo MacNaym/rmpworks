@@ -1,4 +1,4 @@
-# B7 staged integration: restricted one-time token redemption
+# B7 restricted one-time token redemption — production-first decision
 
 ## Environment inventory (24 Nov 2026)
 
@@ -11,19 +11,25 @@ The repo already holds dormant B6 inbox SQL and B7 token issuance, mail and reso
 ## Files
 
 - `2026-11-24-b7-staging-consume-token.sql`: *proposed* transactional PostgreSQL migration, **NOT APPLIED**. Includes idempotent columns, scoped digest format/expiry checks, digest uniqueness, and `public.creator_consume_email_token(text)` RPC. Atomic UPDATE verifies current publication and approved magnet; clears digest on success. REVOKE EXECUTE for PUBLIC/anon/authenticated and GRANT only to service_role. SECURITY DEFINER has an empty search_path and schema-qualified relations; it is a privileged function and requires independent review before any real installation.
-- `functions/_lib/creator-token-consumer.ts`: dormant backend-only adapter that refuses all calls unless `stagingApproved` is true and server credential and URL pass configuration checks. Does not import into any public route.
+- `functions/_lib/creator-token-consumer.ts`: dormant backend-only adapter that refuses all calls unless a trusted server authorization flag is true (currently named `stagingApproved`; rename before production wiring) and server credential and URL pass configuration checks. Does not import into any public route.
 - `tests/creator-token-consumer.test.mjs`: five mock tests; **not yet executed**.
 
-## Exact preconditions before any staged migration
+## Operating decision — approved 24 Nov 2026
 
-1. Create or designate a *separate* RMP staging Supabase project, verify account/ref explicitly. New projects may involve cost and require approval.
-2. Take a recoverable schema backup and understand foreign key/trigger dependencies from B6.
-3. Install and test B6 inbox design in that staging target, then review and execute B7 SQL within a transaction.
-4. Verify function privileges, deliberate token consumption, replay denial, expiry, unpublished creator, unapproved magnet and cross-tenant mismatches via real SQL.
-5. Check Supabase security advisors, test rollback, and explicitly authorize any backend privileged secret only on staging. Never expose the key in client code.
-6. Add an audited **token issuance/persistence** method; this PR only implements consumption, not delivery or issuance storage.
-7. Configure transactional email provider separately after DNS/sender verification and cost review, retain no-send default until approved.
-8. Review consent, privacy retention, data deletion and ShopShield. Public-release issue #28 stays closed.
+Captain approved **one Supabase project for RMP Works for now**, without a dedicated staging database. Reassess staging if the project gains traction, real customers, or increased production risk. This is **not approval to apply the existing SQL proposal unchanged**, and does not authorize public release. We must avoid untested destructive changes and never treat a transaction as a substitute for recoverable backups. Maintain the closed release gate #28.
+
+## Preconditions before any production database change
+
+1. Explicitly resolve the **rmpworks production** target/ref before every database operation; never reuse another product's project.
+2. Read-only schema/RLS/security audit first; capture a recoverable backup or PITR capability and identify dependencies/restore plan.
+3. Consolidate and review B6 and B7 SQL into carefully scoped, idempotent additions with no changes to existing live tables or flows beyond what has been separately approved.
+4. Execute offline mock tests first, then explicitly authorize each production schema change after risk review; use transactional DDL where possible, with a written rollback.
+5. Test only with clearly labeled synthetic records in the new isolated structures. Verify privileges, one-time redemption, expiry, unpublished creator, unapproved magnet and cross-tenant denial; clean up synthetic data safely.
+6. Check Supabase security advisors. Never expose backend secrets in client code. Keep `RMP_CREATOR_PUBLIC_RELEASE` unset throughout.
+7. Add audited token issuance/persistence separately; the current PR only implements consumption.
+8. Configure transactional email provider separately after DNS/sender verification and cost review; keep no-send default until approved.
+9. Review consent, privacy retention, data deletion and ShopShield. Gate #28 stays closed.
+10. When real users and sales increase risk, re-evaluate whether dedicated staging is justified.
 
 Run the five offline mock tests in an isolated worktree:
 
