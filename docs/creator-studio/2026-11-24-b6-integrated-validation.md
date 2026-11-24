@@ -32,3 +32,6 @@ After successful local tests and security review, merge the smaller PRs (#45, #4
 
 ## Review note — HTTP 409 hardening
 PostgREST uses HTTP 409 for both uniqueness (23505) and foreign-key failures (23503). PR #48 now names the triple uniqueness constraint and only recognizes the named 23505 duplicate; every other 409 fails closed. The integration harness exercises a 23503 response. This is a code review/test preparation step; neither mocks nor static regex tests prove that the SQL works on actual staging.
+
+## Verification record — 24 Nov 2026
+Using the GitHub connector, all five committed `.mjs` test source files were retrieved and parsed in a JavaScript syntax-only check (the `import` statements were removed; `import.meta` was substituted in the one module where it appears). **Syntax: PASS for 5/5 files. Test execution: NOT RUN.** The isolated runtime cannot reach this private GitHub repository, so it cannot run the actual committed suite. Do not treat this syntax check as a test pass. A true Node run on a checked-out branch is still required.
