@@ -3,6 +3,7 @@
  * No Cloudflare-specific import, deploy or network side effect here.
  */
 import {probeHostingerSmtp} from "../../functions/_lib/creator-smtp-connection-probe.ts";
+import {diagnoseHostingerEgress} from "./hostinger-egress-diagnostic.ts";
 import type {CloudflareConnect} from "../../functions/_lib/creator-cloudflare-smtp-channel.ts";
 
 export type DiagnosticEnv={
@@ -44,5 +45,11 @@ export async function handleProbeRequest(
  const result=await probeHostingerSmtp({
   enabled:true,connect:connector,timeoutMs:4000
  });
+ if(result.status==="unavailable" && result.phase==="connect"){
+  // Diagnostic-only, never used on public creator endpoints.
+  // Secondary TCP attempt is limited to Hostinger:587 with no SMTP commands.
+  const fallback=await diagnoseHostingerEgress(connector as unknown as Parameters<typeof diagnoseHostingerEgress>[0]);
+  return json({...result,egress:fallback},503);
+ }
  return json(result,result.status==="connected"?200:503);
 }
