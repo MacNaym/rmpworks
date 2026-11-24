@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS public.creator_public_lead_inbox (
    CHECK (status IN ('pending_verification','verified','processed','rejected','expired')),
  created_at timestamptz NOT NULL DEFAULT now(),
  updated_at timestamptz NOT NULL DEFAULT now(),
- UNIQUE (creator_account_id, magnet_id, email)
+ CONSTRAINT creator_public_lead_inbox_unique_lead UNIQUE (creator_account_id, magnet_id, email)
 );
 ALTER TABLE public.creator_public_lead_inbox ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON public.creator_public_lead_inbox FROM PUBLIC, anon, authenticated;
