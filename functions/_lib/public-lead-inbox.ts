@@ -61,7 +61,17 @@ export async function stagePublicCreatorLead(
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(5000),
     });
-    if (response.status === 409) return "duplicate";
+    if (response.status === 409) {
+      // PostgREST uses 409 for BOTH 23505 unique and 23503 foreign-key
+      // violations. Only the explicitly named deduplication constraint counts
+      // as an existing lead; mismatched tenants/magnets remain unavailable.
+      const error = await response.json().catch(() => null) as
+        {code?: unknown; message?: unknown} | null;
+      return error?.code === "23505" &&
+        typeof error.message === "string" &&
+        error.message.includes('creator_public_lead_inbox_unique_lead')
+          ? "duplicate" : "unavailable";
+    }
     return response.status === 201 || response.status === 204 ? "accepted" : "unavailable";
   } catch {
     return "unavailable";
