@@ -22,7 +22,7 @@ export const reply=(status:number,body:object)=>new Response(JSON.stringify(body
  status,headers:{"content-type":"application/json; charset=utf-8",
  "cache-control":"no-store","x-content-type-options":"nosniff","referrer-policy":"no-referrer"}
 });
-const allowedHost=(host:string)=>host==="rmpworks.com"||host==="www.rmpworks.com"||
+const allowedHost=(host:string)=>host==="rmpworks.com"||host==="www.rmpworks.com"||host==="rmpworks.pages.dev"||
  /^[a-z0-9-]+\.rmpworks\.pages\.dev$/.test(host);
 function sameOrigin(request:Request):boolean{
  try{
@@ -31,9 +31,6 @@ function sameOrigin(request:Request):boolean{
   const provided=new URL(origin);
   return provided.origin===url.origin&&provided.protocol==="https:";
  }catch{return false;}
-}
-function bytesToHex(bytes:Uint8Array):string{
- return Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("");
 }
 async function fixedTimeEquals(a:string,b:string):Promise<boolean>{
  const encoder=new TextEncoder();
